@@ -30,11 +30,16 @@ end
 class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 3}
   validates :body, presence: true
+  has_many :comments
 
 end 
 
 class User < ActiveRecord::Base
   has_secure_password
+end
+
+class Comment < ActiveRecord::Base
+  belongs_to :post
 end
 
 get "/" do
@@ -63,6 +68,14 @@ get "/posts/:id" do
   erb :"posts/show"
 end
 
+post "/posts/:id" do
+  @post = Post.find(params[:id])
+  @comment = @post.comments.create(params[:comment]) 
+  if @comment.save
+    redirect "/posts/#{@post.id}"
+  end
+end 
+
 get "/posts/:id/edit" do
   @post = Post.find(params[:id])
   @title = "Edit Form"
@@ -78,6 +91,15 @@ put "/posts/:id" do
   end
 end
 # Test why erb :"posts/edit"
+post "/posts" do
+  @post = Post.new(params[:post])
+  if @post.save
+    redirect "/posts/#{@post.id}"
+  else
+    erb :"posts/new"
+  end
+end
+
 
 delete "/posts/:id" do
   @post = Post.find(params[:id]).destroy
