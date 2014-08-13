@@ -1,31 +1,16 @@
-<h1><%= @post.title %></h1>
-<p><%= @post.body %></p>
-<br/>
-<h2>Comments</h2>
-<% @post.comments.each do |comment| %>
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.commenter%>
-  </p>
-
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
-
-<% end %>
-
-<h2>Add a comment:</h2>
-<form action="/posts/<%= @post.id %>" method="post">
-    <label for="comment_commenter">Commenter:</lable><br/> 
-    <input id="comment_commenter" name="comment[commenter]" type="text"  />
-    <br/>
-
-    <label for="comment_body">Comment:</lable><br/>
-    <textarea id="comment_body" name="comment[body]",row="4"></textarea>
-    <br/>
-
-    <input type="submit" value="Create Comment" />
-
-  </form>
-
+<div class="single_post">
+  <article class="single_post">
+    <header>
+      <h1><%= @post.title %></h1>
+      <div class="info">
+        <span class="post_time">
+          <%= pretty_date(@post.created_at) %>
+        </span>
+	<a class="post_tag" href="/tags/<%= @post.tag %>"><%= @post.tag %></a>
+      </div>
+    </header>
+    <div class="content">
+      <p><%= @post.body %></p>
+    </div>
+  </article>
+</div>

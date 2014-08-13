@@ -1,21 +1,50 @@
-
-<html>
+<!DOCTYPE html>
+<html lang="zh">
 <head>
-  <title><%= title %></title>
-  <% puts request.inspect%>
+  <meta charset="UTF-8">
+  <title>Aide's Blog</title>
+  <meta name="description" content="Aide 的个人博客">
+  <meta name="keywords" content="ruby, music, javascript, ios, rock">
+  <meta name="author" content="AideWoode">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About Me</a></li>
-    <li><a href="/posts/new">New Post</a></li>
-    <% if post_show_pages? %>
-      <li><a href="/posts/<%= @post.id %>/edit">Edit Post</a></li>
-      <li><%= delete_post_button(@post.id) %></li>
-    <% end %>
-  </ul>
-  <%= yield %>
+<body class="index">
+  <header class="index">
+    <div class="site_title">
+      <h1>Aide's Blog</h1>
+    </div>
+    <div id="nav">
+      <nav class="global_nav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About Me</a></li>
+          <li><a href="/posts/new">New Post</a></li>
+          <% if post_show_pages? %>
+            <li><a href="/posts/<%= @post.id %>/edit">Edit Post</a></li>
+	    <li><%= delete_post_button(@post.id)%></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <section class="index">
+    <%= yield %>
+    <footer class="index">
+      <p>© 2014 AideWoode</p>
+      <a href="http://www.sinatrarb.com" target="_blank"><img src="/picture/logo.png" alt="logo" /></a>
+    </footer>
+  </section>
 
+  <script src="/bower_components/nanobar/nanobar.min.js"></script>
+  <script>
+    var options = {
+      bg: "#ffcc66",
+      id: "progressBar"
+    };
+
+    var nanobar = new Nanobar(options);
+    nanobar.go(100);
+  </script>
 </body>
 
 </html>

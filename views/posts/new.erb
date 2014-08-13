@@ -1,10 +1,15 @@
 <h1>New Post</h1>
 <form action="/posts" method="post">
-  <label for="post_title">Title:</lable><br/> 
+  <label for="post_title">Title:</label><br/> 
   <input id="post_title" name="post[title]" type="text" value="<%= @post.title %>" />
   <br/>
 
-  <label for="post_body">Body:</lable><br/>
+  <label for="post_tag">Tag:</label><br/>
+  <input id="post_tag" name="post[tag]" type="text" value="<%= @post.tag%>"/>
+  <br/>
+
+
+  <label for="post_body">Body:</label><br/>
   <textarea id="post_body" name="post[body]" row="5"><%= @post.body %></textarea>
   <br/>
 

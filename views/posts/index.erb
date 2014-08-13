@@ -1,12 +1,12 @@
-<h1>Aide's Blog</h1>
-<ul>
+<div id="all_posts">
   <% @posts.each do |post| %>
-    <li>
-      <h2>
+    <article class="post">
+      <div class="post_time"><%= pretty_date(post.created_at) %></div>
+      <h2 class="post_title">
         <a href= "/posts/<%= post.id%>"><%= post.title %></a>
-        <span><%= pretty_date(post.created_at) %></span>
+	<a class="tag" href= "/tags/<%= post.tag%>"><%= post.tag %></a>
       </h2>
-    </li>
+    </article>
 
   <% end %>
-</ul>
+</div> 
