@@ -14,3 +14,18 @@
     </div>
   </article>
 </div>
+<script src="/js/headroom/headroom.min.js"></script>
+<script>
+(function() {
+   var header = new Headroom(document.querySelector("header.index"), {
+       tolerance: 5,
+       offset: 120,
+       classes: {
+         initial: "animated",
+	 pinned: "slideDown",
+	 unpinned: "slideUp"
+       }
+       });
+   header.init();
+ }());
+</script>

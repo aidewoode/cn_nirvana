@@ -1,18 +1,32 @@
-<h1>New Post</h1>
-<form action="/posts" method="post">
-  <label for="post_title">Title:</label><br/> 
-  <input id="post_title" name="post[title]" type="text" value="<%= @post.title %>" />
-  <br/>
+<div class="new_edit_post">
+  <h1>New Post</h1>
+  <form action="/posts" method="post">
+    <label for="post_title">Title:</label><br/> 
+    <input id="post_title" name="post[title]" type="text" value="<%= @post.title %>" />
+    <br/>
 
-  <label for="post_tag">Tag:</label><br/>
-  <input id="post_tag" name="post[tag]" type="text" value="<%= @post.tag%>"/>
-  <br/>
+    <label for="post_tag">Tag:</label><br/>
+    <input id="post_tag" name="post[tag]" type="text" value="<%= @post.tag%>"/>
+    <br/>
 
 
-  <label for="post_body">Body:</label><br/>
-  <textarea id="post_body" name="post[body]" row="5"><%= @post.body %></textarea>
-  <br/>
+    <label for="post_body">Body:</label><br/>
+    <textarea id="post_body" name="post[body]" row="5"><%= @post.body %></textarea>
+    <br/>
 
-  <input type="submit" value="Create Post" />
+    <input type="submit" value="Create Post" />
 
-</form>
+  </form>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/module.js"></script>
+<script type="text/javascript" src="/js/simditor.js"></script>
+<script type="text/javascript" src="/js/simditor-markdown.js"></script>
+
+<script>
+var editor = new Simditor({
+      textarea: $('#post_body'),
+      markdown: true
+    }
+    );
+</script>

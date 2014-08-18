@@ -6,13 +6,6 @@ set :database, "sqlite3:blog.db"
 
 helpers do
 
-  def title
-    if @title
-      "#{@title} -- Aide's Blog"
-    else
-      "Aide's Blog"
-    end
-  end
 
   def pretty_date(time)
     time.strftime("%d %b %Y")
@@ -45,7 +38,6 @@ get "/" do
 end
 
 get "/posts/new" do
-  @title = "New Post"
   @post = Post.new
   erb :"posts/new"
 end
@@ -61,13 +53,11 @@ end
 
 get "/posts/:id" do
   @post = Post.find(params[:id])
-  @title = @post.title
   erb :"posts/show"
 end
 
 get "/posts/:id/edit" do
   @post = Post.find(params[:id])
-  @title = "Edit Form"
   erb :"posts/edit"
 end
 
@@ -88,13 +78,12 @@ delete "/posts/:id" do
 end
 
 get "/tags/:tag" do
-  @post = Post.find_by_tag(params[:tag])
-  @title = @post.title
+  @posts = Post.where("tag = ?", params[:tag]).order(created_at: :desc)
+  erb :"posts/tags"
   # 添加渲染模版。
 end
 
 get "/about" do
-  @title = "About Me"
   erb :"pages/about"
 end
 

@@ -1,0 +1,14 @@
+<div class="tag_posts"> 
+  <div class="result">
+    <h1> The result of "<%= @posts.first.tag %>"</h1>
+  </div>
+  <% @posts.each do |post| %>
+    <article class="post">
+      <div class="post_time"><%= pretty_date(post.created_at) %></div>
+      <h2 class="post_title">
+        <a href="/posts/<%= post.id %>"><%= post.title%></a>
+	<a class="tag" href="#"><%= post.tag%></a>
+      </h2>
+    </article>
+  <% end%>
+</div>
