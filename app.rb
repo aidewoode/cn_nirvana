@@ -2,6 +2,9 @@
 require "sinatra"
 require "sinatra/activerecord"
 
+enable :sessions
+
+set :session_secret, 'super secret'
 set :database, "sqlite3:blog.db"
 
 helpers do
@@ -18,6 +21,15 @@ helpers do
   def delete_post_button(post_id)
     erb :_delete_post_button, locals: { post_id: post_id}
   end
+
+  def login? 
+    !session[:user_id].nil?
+  end
+
+  def is_login
+    redirect '/login' unless login?
+  end
+  # 需要重构，增加安全性 is_login 需要放在其他位置。。
 end
 
 class Post < ActiveRecord::Base
@@ -38,11 +50,13 @@ get "/" do
 end
 
 get "/posts/new" do
+  is_login
   @post = Post.new
   erb :"posts/new"
 end
 
 post "/posts" do
+  is_login
   @post = Post.new(params[:post])
   if @post.save
     redirect "/posts/#{@post.id}"
@@ -57,11 +71,13 @@ get "/posts/:id" do
 end
 
 get "/posts/:id/edit" do
+  is_login
   @post = Post.find(params[:id])
   erb :"posts/edit"
 end
 
 put "/posts/:id" do
+  is_login
   @post = Post.find(params[:id])
   if @post.update_attributes(params[:post])
     redirect "/posts/#{@post.id}"
@@ -73,6 +89,7 @@ end
 
 
 delete "/posts/:id" do
+  is_login
   @post = Post.find(params[:id]).destroy
   redirect "/"
 end
@@ -80,10 +97,28 @@ end
 get "/tags/:tag" do
   @posts = Post.where("tag = ?", params[:tag]).order(created_at: :desc)
   erb :"posts/tags"
-  # 添加渲染模版。
 end
 
 get "/about" do
   erb :"pages/about"
 end
 
+get "/login" do
+  erb :"pages/login"
+end 
+
+get "/logout" do
+  is_login
+  session.clear
+  redirect '/'
+end
+
+post "/sessions" do
+  user = User.find_by_email(params[:session][:email])
+  if user && user.authenticate(params[:session][:password])
+    session[:user_id] = user.id
+    redirect '/'
+  else
+    redirect '/login'
+  end
+end

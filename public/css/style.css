@@ -248,6 +248,8 @@ h2.post_title a.tag {
   right: 65px;
   top: -3px; /*  需改进，使其自动计算偏差的像素*/
   border: 2.5px solid #00cc33;
+  font-family: monaco, monospace,"Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, STHeiti, "WenQuanYi Micro Hei", sans-serif;
+
   
 }
 
