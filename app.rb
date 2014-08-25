@@ -104,7 +104,7 @@ get "/about" do
 end
 
 get "/login" do
-  erb :"pages/login"
+  erb :"pages/login", :layout => false
 end 
 
 get "/logout" do

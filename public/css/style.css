@@ -166,7 +166,7 @@ div.site_title h1 {
 }
 
 #nav {
-  background: rgba(232,232,232,0.5)
+  background: rgba(232,232,232,0.6)
 }
 
 #nav nav.global_nav ul {
@@ -192,7 +192,11 @@ div.site_title h1 {
   text-decoration: none;
   letter-spacing: 1px;
   line-height: 2.8em;
-  color: greenyellow;
+  color: #66cc00;
+}
+
+#nav nav.global_nav ul li a:hover {
+  color: #009900;
 }
 
 section.index {
@@ -212,7 +216,7 @@ section.index {
 }
 
 article.post {
-  border-bottom: 1px solid #d4d7d8;
+  border-bottom: 3px solid #555;
   display: block;
   margin-top: 26.5px;
 
@@ -220,7 +224,7 @@ article.post {
 
 div.post_time {
   font-size: 1.5em;
-  color: #999;
+  color: #bbb;
   font-weight: 400;
 }
 
@@ -233,12 +237,16 @@ h2.post_title {
 
 h2.post_title a {
   text-decoration: none;
-  color: green;
+  color: #009999;
+}
+
+h2.post_title a:hover {
+  color: #006633;
 }
 
 h2.post_title a.tag {
   display: inline-block;
-  background: #00cc33;
+  background: #cc0066;
   border-radius: 10px;
   font-size: 0.75em;
   text-align: center;
@@ -247,7 +255,7 @@ h2.post_title a.tag {
   position: absolute;
   right: 65px;
   top: -3px; /*  需改进，使其自动计算偏差的像素*/
-  border: 2.5px solid #00cc33;
+  border: 2.5px solid #cc0066;
   font-family: monaco, monospace,"Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, STHeiti, "WenQuanYi Micro Hei", sans-serif;
 
   
@@ -255,7 +263,7 @@ h2.post_title a.tag {
 
 
 h2.post_title a.tag:hover {
-  color: #00cc33;
+  color: #cc0066;
   background: #fff;
   
 }
@@ -323,7 +331,7 @@ div.info span.post_time {
 
 div.info a.post_tag {
   display: inline-block;
-  background: #00cc33;
+  background: #cc0066;
   border-radius: 9px;
   font-size: 0.85em;
   text-align: center;
@@ -331,7 +339,7 @@ div.info a.post_tag {
   padding: 1px 9px;
   margin-left: 55px;
   text-decoration: none;
-  border: 2.5px solid #00cc33;
+  border: 2.5px solid #cc0066;
 }
 
 
@@ -671,4 +679,84 @@ hr {
   color: #dfdfdf;
   background-color: #dfdfdf;
 }
+
+/********************************************/
+
+/* login page style */
+
+div.login_page {
+  position: relative;
+  min-height: 1000px;
+  width: auto;
+}
+
+div.login_page div.header {
+  text-align: center;
+  margin-top: 80px;
+
+}
+
+div.login_page div.header h1 {
+  font-size: 3em;
+  font-weight: 400;
+}
+
+div.login_page div.login_form {
+  position: absolute;
+  margin: auto;
+  margin-top: 150px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  height: 330px;
+  border: 3px solid #009966;
+  border-radius: 20px;
+  box-shadow: 5px 9px 30px 3px #555;
+}
+
+div.avatar {
+  text-align: center;
+  margin-top: -50px;
+}
+
+div.avatar img {
+  width: 100px;
+  height: 100px;
+}
+
+div.login_form form {
+
+}
+
+div.login_form input {
+  display: block;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 50px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  outline: none;
+  height: 26px;
+  padding: 2.5px 8px;
+}
+
+div.login_form input[type="submit"] {
+  padding: 15px;
+  width: 184px;
+  line-height: 1px;
+  border: none;
+  background: #00cc99;
+}
+
+div.login_form input:focus {
+  background-color: #eee;
+}
+
+div.login_form input[type="submit"]:hover {
+  color: #fff;
+}
+  
+
 
