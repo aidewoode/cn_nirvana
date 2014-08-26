@@ -10,9 +10,9 @@ gem "thin"
 group :development do
   gem "sqlite3"
   gem "shotgun"
-  gem "tux"
 end
 
 group :production do
   gem "pg"
+  gem "tux"
 end
