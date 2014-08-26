@@ -7,7 +7,6 @@ require "./environments"
 enable :sessions
 
 set :session_secret, 'super secret'
-set :database , 'sqlite3:blog.db'
 
 helpers do
 
