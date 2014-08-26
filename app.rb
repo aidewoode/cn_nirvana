@@ -6,7 +6,8 @@ require "./environments"
 
 enable :sessions
 
-set :session_secret, 'super secret'
+set :session_secret, ENV['SESSION_KEY'] || "qiueruydfgy767fkiuewponfd"
+
 
 helpers do
 
