@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140816025833) do
+ActiveRecord::Schema.define(version: 20140813080603) do
 
   create_table "posts", force: true do |t|
     t.string   "title"
@@ -20,8 +20,6 @@ ActiveRecord::Schema.define(version: 20140816025833) do
     t.datetime "updated_at"
     t.string   "tag"
   end
-
-  add_index "posts", ["tag"], name: "index_posts_on_tag"
 
   create_table "users", force: true do |t|
     t.string "name"
