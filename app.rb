@@ -6,7 +6,8 @@ require "./environments"
 
 enable :sessions
 
-set :session_secret, ENV['SESSION_KEY'] || "qiueruydfgy767fkiuewponfd"
+set :session_secret, "super secret"
+# set :session_secret, ENV['SESSION_KEY'] || "qiueruydfgy767fkiuewponfd"
 
 
 helpers do
@@ -16,7 +17,7 @@ helpers do
     time.strftime("%d %b %Y")
   end
 
-  def post_show_page? 
+  def post_show_pages? 
     request.path_info =~ /\/posts\/\d+$/
   end
 
