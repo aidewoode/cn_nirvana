@@ -166,7 +166,8 @@ div.site_title h1 {
 }
 
 #nav {
-  background: rgba(232,232,232,0.6)
+  background: rgba(232,232,232,0.6);
+  box-shadow: 1px 2px 3px #bbb;
 }
 
 #nav nav.global_nav ul {
