@@ -1,12 +1,3 @@
 <div id="all_posts">
-  <% @posts.each do |post| %>
-    <article class="post">
-      <div class="post_time"><%= pretty_date(post.created_at) %></div>
-      <h2 class="post_title">
-        <a href= "/posts/<%= post.id%>"><%= post.title %></a>
-	<a class="tag" href= "/tags/<%= post.tag%>"><%= post.tag %></a>
-      </h2>
-    </article>
-
-  <% end %>
+  <%= post_each(@posts)%>
 </div> 

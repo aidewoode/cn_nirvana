@@ -25,6 +25,14 @@ helpers do
     erb :_delete_post_button, locals: { post_id: post_id}
   end
 
+  def post_each(posts)
+    erb :"posts/_post_each", locals: { posts: posts}
+  end
+
+  def new_edit_form(post)
+    erb :"posts/_form", locals: { post: post }
+  end
+
   def login? 
     !session[:user_id].nil?
   end
