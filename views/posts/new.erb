@@ -6,15 +6,4 @@
 
   </form>
 </div>
-<script type="text/javascript" src="/js/jquery.min.js"></script>
-<script type="text/javascript" src="/js/module.js"></script>
-<script type="text/javascript" src="/js/simditor.js"></script>
-<script type="text/javascript" src="/js/simditor-markdown.js"></script>
-
-<script>
-var editor = new Simditor({
-      textarea: $('#post_body'),
-      markdown: true
-    }
-    );
-</script>
+<%= erb :"posts/_new_edit_js" %>
