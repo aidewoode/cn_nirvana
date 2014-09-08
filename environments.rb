@@ -4,7 +4,7 @@ end
 
 configure :production do
   db = URI.parse(ENV['DATABASE_URL'])
-# 需要改进，不要把数据库链接暴露出来。
+
   ActiveRecord::Base.establish_connection(
     :adapter => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
     :host => db.host,

@@ -155,11 +155,16 @@ div.site_title {
   
 }
 
+@font-face {
+  font-family: titleFont;
+  src: url('/fonts/Handlee-Regular.ttf')
+}
+
 div.site_title h1 {
   margin: auto;
   font-size: 2.5em;
   padding: 0.5em;
-  font-family: 'Handlee',Consolas, monaco, monospace, "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, STHeiti, "WenQuanYi Micro Hei",cursive, sans-serif;
+  font-family: titleFont, Consolas, monaco, monospace, "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, STHeiti, "WenQuanYi Micro Hei",cursive, sans-serif;
   /* 用图片替换 */
   word-spacing: 6px;
   letter-spacing: 3px;
@@ -192,12 +197,14 @@ div.site_title h1 {
   font-size: 1.2em;
   text-decoration: none;
   letter-spacing: 1px;
-  line-height: 2.8em;
+  line-height: 2.5em;
   color: #66cc00;
+  border-bottom: 3px solid transparent; 
 }
 
 #nav nav.global_nav ul li a:hover {
   color: #009900;
+  border-bottom: solid #009900;
 }
 
 section.index {
