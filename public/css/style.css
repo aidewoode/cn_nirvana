@@ -148,7 +148,7 @@ header.index {
 }
 
 div.site_title {
-  background: #66CC66;
+  background: #92cf42;
   text-align: center;
   border-bottom: 2px solid #c8c8c8;
   
@@ -894,5 +894,46 @@ div.login_form input[type="submit"]:hover {
   color: #fff;
 }
   
+
+/**************************************/
+
+/* 404 page style */
+
+body.page404 {
+  background-image: url(/picture/background.png)
+}
+div.page404 {
+  position: relative;
+  min-height: 600px;
+  width: auto;
+}
+
+div.page404 h1 {
+  margin-top: 320px;
+  text-align: center;
+  font-size: 10em;
+  letter-spacing: 10px;
+  margin-bottom: 0;
+}
+
+div.page404 div.button {
+  text-align: center;
+  margin-top: 160px;
+}
+
+div.page404 a {
+  border: 2px solid #66cc00;
+  text-decoration: none;
+  font-size: 1.2em;
+  padding: 6px 6px;
+  border-radius: 12px;
+  color: #fff;
+  background: #66cc00
+}
+
+div.page404 a:hover {
+  background: #339900;
+  border-color: #339900;
+}
 
 

@@ -130,3 +130,7 @@ post "/sessions" do
     redirect '/login'
   end
 end
+
+not_found do
+  erb :"pages/404", :layout => false
+end
