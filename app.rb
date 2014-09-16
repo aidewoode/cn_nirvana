@@ -37,7 +37,6 @@ helpers do
   def is_login
     redirect '/login' unless login?
   end
-  # 需要重构，增加安全性 is_login 需要放在其他位置。。
 end
 
 class Post < ActiveRecord::Base

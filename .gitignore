@@ -11,3 +11,4 @@ doc/
 .DS_Store
 .project
 .idea
+*.db
