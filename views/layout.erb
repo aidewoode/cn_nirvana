@@ -20,8 +20,8 @@
     <div id="nav">
       <nav class="global_nav">
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
+          <li><a href="/" id="home" >Home</a></li>
+          <li><a href="/about" id="about" >About</a></li>
 	  <% if login? %>
             <li><a href="/posts/new">New Post</a></li>
 	    <li><a href="/logout">Logout</a></li>
@@ -41,7 +41,7 @@
       <a href="http://www.sinatrarb.com" target="_blank"><img src="/picture/sinatra-logo.png" alt="logo" /></a>
     </footer>
   </section>
-
+  <script src="/js/my.js"></script>
   <script src="/js/nanobar/nanobar.min.js"></script>
   <script>
     var options = {

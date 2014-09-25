@@ -202,6 +202,11 @@ div.site_title h1 {
   border-bottom: 3px solid transparent; 
 }
 
+#nav nav.global_nav ul li a.active {
+  color: #009900;
+  border-bottom: solid #009900;
+}
+
 #nav nav.global_nav ul li a:hover {
   color: #009900;
   border-bottom: solid #009900;
