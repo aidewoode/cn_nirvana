@@ -1,17 +1,17 @@
-
+/* 控制导航栏样式*/
 function activeLink() {
   var url = document.URL;
+  var lasturl = url.slice(url.lastIndexOf("/")+1);
 
-/* 需改进url 的匹配*/
-  if( url == "http://localhost:9393/") {
-    document.getElementById("home").className="active";
-    document.getElementById("about").className="";
-  }
-  if(url == "http://localhost:9393/about") {
-    document.getElementById("about").className="active";
-    document.getElementById("home").className="";
-     
-  }
+  if(lasturl == "") {
+    var node = document.getElementById("home");
+    node.parentNode.childNodes.className="";
+    node.className="active";
+  } else {
+    var node = document.getElementById(lasturl);
+    node.parentNode.childNodes.className="";
+    node.className="active";
+  } 
+
 }
-
 activeLink();
