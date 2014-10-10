@@ -7,7 +7,6 @@ gem "sinatra-activerecord"
 gem "bcrypt"
 gem "thin"
 gem "redcarpet"
-gem "rouge"
 
 group :development do
   gem "sqlite3"
