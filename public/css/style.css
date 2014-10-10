@@ -648,6 +648,16 @@ div.new_edit_post input[type="submit"]:hover {
   color: #fff;
 }
 
+#post_body {
+  display: block;
+  margin: auto;
+  height: 400px;
+  width: 600px;
+  outline: none;
+  border: 2px solid black;
+  border-radius: 15px;
+}
+
 /*******************************************/
 
 /* article style */

@@ -1,6 +1,7 @@
 
 require "sinatra"
 require "sinatra/activerecord"
+require "Redcarpet"
 require "./environments"
 
 enable :sessions
@@ -37,6 +38,12 @@ helpers do
   def is_login
     redirect '/login' unless login?
   end
+
+  def mark_down(post)
+   markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, quote: true) 
+   markdown.render(post)
+  end
+
 end
 
 class Post < ActiveRecord::Base
