@@ -1,7 +1,7 @@
 
 require "sinatra"
 require "sinatra/activerecord"
-require "Redcarpet"
+require "redcarpet"
 require "./environments"
 
 enable :sessions
