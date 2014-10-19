@@ -50,14 +50,27 @@ class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 3}
   validates :body, presence: true
   validates :tag, presence: true
+  belongs_to :user
 
 end 
 
 class User < ActiveRecord::Base
+  validates :name, presence: true
+  validates :email, presence: true
+  validates :password, presence: true
+  has_many :posts
+
   has_secure_password
 end
 
+class Comment < ActiveRecord::Base
+  validates :body, presence: true
+  belongs_to :post
+  belongs_to :user
+end
 
+## post routes
+#
 get "/" do
   @posts = Post.order("created_at DESC") # 需要改进。
   erb :"posts/index"
@@ -99,7 +112,6 @@ put "/posts/:id" do
     erb :"posts/edit"
   end
 end
-# Test why erb :"posts/edit"
 
 
 delete "/posts/:id" do
@@ -113,9 +125,7 @@ get "/tags/:tag" do
   erb :"posts/tags"
 end
 
-get "/about" do
-  erb :"pages/about"
-end
+# user routes
 
 get "/login" do
   erb :"pages/login", :layout => false
@@ -135,6 +145,12 @@ post "/sessions" do
   else
     redirect '/login'
   end
+end
+
+# page routes
+#
+get "/about" do
+  erb :"pages/about"
 end
 
 not_found do
