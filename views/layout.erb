@@ -6,48 +6,26 @@
   <meta name="description" content="涅磐中文家庭论坛">
   <meta name="keywords" content="Nirvana,Grunge music,Kurt Cobain,Rock music">
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/prism.css">
 </head>
 <body class="index">
   <header class="index">
-    <div class="site_title">
-      <h1>Aide's Blog</h1>
-    </div>
-    <div id="nav">
-      <nav class="global_nav">
-        <ul>
-          <li><a href="/" id="home" >Home</a></li>
-          <li><a href="/about" id="about" >About</a></li>
-	  <% if login? %>
-            <li><a href="/posts/new">New Post</a></li>
-	    <li><a href="/logout">Logout</a></li>
-            <% if post_show_pages? %>
-              <li><a href="/posts/<%= @post.id %>/edit">Edit Post</a></li>
-	      <li><%= delete_post_button(@post.id)%></li>
-            <% end %>
-          <% end%>
-        </ul>
-      </nav>
-    </div>
+    <nav class="global_nav">
+      <div class="site_title">
+        <h1>CnNirvana</h1>
+      </div>
+      <ul>
+        <li><a href="/" id="home" >Home</a></li>
+        <li><a href="/about" id="about" >About</a></li>
+      </ul>
+      <div class="empty">
+        
+      </div>
+    </nav>
   </header>
   <section class="index">
-    <%= yield %>
-    <footer class="index">
-      <p>© 2014 AideWoode</p>
-      <a href="http://www.sinatrarb.com" target="_blank"><img src="/picture/sinatra-logo.png" alt="logo" /></a>
-    </footer>
   </section>
-  <script src="/js/my.js"></script>
-  <script src="/js/nanobar/nanobar.min.js"></script>
-  <script>
-    var options = {
-      bg: "#ffcc66",
-      id: "progressBar"
-    };
-
-    var nanobar = new Nanobar(options);
-    nanobar.go(100);
-  </script>
+  <footer class="index">
+    <p>Made By AideWoode</p>
+  </footer>
 </body>
-
 </html>
