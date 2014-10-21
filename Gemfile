@@ -7,6 +7,7 @@ gem "sinatra-activerecord"
 gem "bcrypt"
 gem "thin"
 gem "redcarpet"
+gem "tux"
 
 group :development do
   gem "sqlite3"
@@ -15,5 +16,4 @@ end
 
 group :production do
   gem "pg"
-  gem "tux"
 end

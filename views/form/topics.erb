@@ -1,0 +1,29 @@
+<div class="all_topics">
+  <% @posts.each do |post| %>
+    <div class="topic">
+      <div class="avatar">
+        <img src="/picture/logo.png" alt="avatar" />
+      </div>
+      <div class="content">
+        <div class="replies">
+          <a href="#">32</a>
+        </div>
+        <div class="infos">
+          <div class="title">
+            <p><%= post.title %> </p>
+          </div>
+          <div class="info">
+            <p><%= pretty_date(post.created_at) %></p>
+          </div>
+        </div>
+        <div class="empty">
+          
+        </div>
+      </div>
+      <div class="empty">
+        
+      </div>
+    </div>
+  <% end %>
+  
+</div>

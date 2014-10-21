@@ -24,11 +24,11 @@ helpers do
   end
 
   def post_each(posts)
-    erb :"posts/_post_each", locals: { posts: posts}
+    erb :"form/_post_each", locals: { posts: posts}
   end
 
   def new_edit_form(post)
-    erb :"posts/_form", locals: { post: post }
+    erb :"form/_form", locals: { post: post }
   end
 
   def login? 
@@ -73,13 +73,18 @@ end
 #
 get "/" do
   @posts = Post.order("created_at DESC") # 需要改进。
-  erb :"posts/index"
+  erb :"form/index"
+end
+
+get "/topics" do
+  @posts = Post.order("created_at DESC") 
+  erb :"form/topics"
 end
 
 get "/posts/new" do
   is_login
   @post = Post.new
-  erb :"posts/new"
+  erb :"form/new"
 end
 
 post "/posts" do
@@ -88,19 +93,14 @@ post "/posts" do
   if @post.save
     redirect "/posts/#{@post.id}"
   else
-    erb :"posts/new"
+    erb :"form/new"
   end
-end
-
-get "/posts/:id" do
-  @post = Post.find(params[:id])
-  erb :"posts/show"
 end
 
 get "/posts/:id/edit" do
   is_login
   @post = Post.find(params[:id])
-  erb :"posts/edit"
+  erb :"form/edit"
 end
 
 put "/posts/:id" do
@@ -109,7 +109,7 @@ put "/posts/:id" do
   if @post.update_attributes(params[:post])
     redirect "/posts/#{@post.id}"
   else
-    erb :"posts/edit"
+    erb :"form/edit"
   end
 end
 
@@ -122,7 +122,7 @@ end
 
 get "/tags/:tag" do
   @posts = Post.where("tag = ?", params[:tag]).order(created_at: :desc)
-  erb :"posts/tags"
+  erb :"form/tags"
 end
 
 # user routes

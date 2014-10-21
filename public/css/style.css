@@ -186,12 +186,13 @@ nav.global_nav ul a {
   vertical-align: middle;
 }
 
-nav.global_nav div.empty {
+div.empty {
   clear: both;
 }
 
 section.index {
   min-height: 1000px;
+  margin-top: 60px;
 }
 
 footer.index {
@@ -201,4 +202,57 @@ footer.index {
 
 footer.index p {
   margin: 10px 0;
+}
+
+/* topcis page style */
+
+div.all_topics {
+  max-width: 700px;
+  margin: auto;
+  padding-top: 50px;
+}
+
+div.all_topics div.avatar img {
+  width: 80px;
+  float: left;
+  margin: 3px 0 3px 5px;
+
+}
+
+div.all_topics div.topic {
+  margin-bottom: 30px;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+div.all_topics div.content {
+  padding-left: 100px;
+}
+
+div.all_topics div.replies {
+  float: right;
+  margin-top: 23px;
+  margin-right: 30px;
+}
+
+div.all_topics div.replies a {
+  text-decoration: none;
+  font-size: 1em;
+  color: red;
+  letter-spacing: 1px;
+
+}
+
+div.all_topics div.infos {
+  padding-right: 50px;
+}
+
+div.all_topics div.title {
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+div.all_topics div.infos p {
+  margin: 0;
+  font-size: 1.1em;
 }
