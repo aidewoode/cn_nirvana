@@ -55,9 +55,15 @@ class Post < ActiveRecord::Base
 end 
 
 class User < ActiveRecord::Base
-  validates :name, presence: true
-  validates :email, presence: true
-  validates :password, presence: true
+
+  before_save { |user| user.email = email.downcase}
+
+  validates :name, presence: true, length: { maximum: 50 }
+  VALID_EMAIL = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, format: { with: VALID_EMAIL },uniqueness: { case_sensitive: false }
+  validates :password, presence: true, length: { minimum: 6 }
+  validates :password_confirmation, presence: true
+  
   has_many :posts
 
   has_secure_password
@@ -127,6 +133,20 @@ end
 
 # user routes
 
+
+get "/signup" do
+  erb :"form/sign_up"
+end
+
+post "/users" do
+  @user = User.new(params[:user])
+  if @user.save
+    redirect '/'
+  else
+    redirect '/signup'
+  end
+end
+
 get "/login" do
   erb :"pages/login", :layout => false
 end 
@@ -138,9 +158,9 @@ get "/logout" do
 end
 
 post "/sessions" do
-  user = User.find_by_email(params[:session][:email])
-  if user && user.authenticate(params[:session][:password])
-    session[:user_id] = user.id
+  @user = User.find_by_email(params[:session][:email])
+  if @user && @user.authenticate(params[:session][:password])
+    session[:user_id] = @user.id
     redirect '/'
   else
     redirect '/login'
