@@ -35,9 +35,10 @@ helpers do
     !session[:user_id].nil?
   end
 
-  def is_login
-    redirect '/login' unless login?
+  def delete_user(user_id)
+    erb :_delete_user, locals: { user_id: user_id }
   end
+
 
   def mark_down(post)
    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, quote: true) 
@@ -77,6 +78,10 @@ end
 
 ## post routes
 #
+def is_login
+  redirect '/login' unless login?
+end
+
 get "/" do
   @posts = Post.order("created_at DESC") # 需要改进。
   erb :"form/index"
@@ -111,9 +116,9 @@ end
 
 put "/posts/:id" do
   is_login
-  @post = Post.find(params[:id])
-  if @post.update_attributes(params[:post])
-    redirect "/posts/#{@post.id}"
+  post = Post.find(params[:id])
+  if post.update_attributes(params[:post])
+    redirect "/posts/#{post.id}"
   else
     erb :"form/edit"
   end
@@ -139,12 +144,13 @@ get "/signup" do
 end
 
 post "/users" do
-  @user = User.new(params[:user])
-  if @user.save
+  user = User.new(params[:user]) #需改进，避免mass assignment
+  if user.save
     redirect '/'
   else
     redirect '/signup'
   end
+
 end
 
 get "/login" do
@@ -158,14 +164,48 @@ get "/logout" do
 end
 
 post "/sessions" do
-  @user = User.find_by_email(params[:session][:email])
-  if @user && @user.authenticate(params[:session][:password])
-    session[:user_id] = @user.id
+  user = User.find_by_email(params[:session][:email])
+  if user && user.authenticate(params[:session][:password])
+    session[:user_id] = user.id
     redirect '/'
   else
     redirect '/login'
   end
 end
+
+get "/:name" do
+  is_login
+  if (@user = User.find_by_name(params[:name]))
+    erb :"form/user"
+  else
+    erb :"pages/404"
+  end
+end
+
+get "/account/edit" do
+  is_login
+  @user = User.find(session[:user_id])
+  erb :"form/user_edit"
+end
+
+patch "/users" do
+  is_login
+  @user = User.find(session[:user_id])
+  if @user.update_attributes(params[:user])
+    redirect "/#{@user.name}"
+  else
+    erb :"form/user_edit" # like render
+  end
+end
+
+delete "/users/:id" do
+  is_login
+  User.find(params[:id]).destroy
+  redirect "/"
+end
+  
+
+# 无法更新部分，必须也要更新密码，如何解决？
 
 # page routes
 #
