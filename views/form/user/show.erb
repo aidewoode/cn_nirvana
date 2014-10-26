@@ -1,0 +1,8 @@
+<div class="user_info">
+  <p><%= @user.name %></p>
+  <p><%= @user.email%></p>
+  <% if admin?(@user.id) %>
+    <%= delete_user(@user.id) %>
+  <% end %>
+  <p><%= @user.admin %></p>
+</div>

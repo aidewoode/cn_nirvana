@@ -1,0 +1,15 @@
+<form action="/users" method="post">
+  <input type="hidden" name="_method" value="patch" />
+
+  <label for="user_name">Name:</label><br/> 
+  <input id="user_name" name="user[name]" type="text" value="<%= @user.name %>" />
+  <br/>
+
+  <label for="user_email">Email:</label><br/>
+  <input id="user_email" name="user[email]" type="text" value="<%=@user.email%>"/>
+  <br/>
+
+
+  <input type="submit" value="Edit Post" />
+
+</form>

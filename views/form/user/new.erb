@@ -1,13 +1,11 @@
 <form action="/users" method="post">
-  <input type="hidden" name="_method" value="patch" />
-
   <label for="user_name">Name:</label><br/> 
-  <input id="user_name" name="user[name]" type="text" value="<%= @user.name %>" />
+  <input id="user_name" name="user[name]" type="text" />
   <br/>
 
   <label for="user_email">Email:</label><br/>
-  <input id="user_email" name="user[email]" type="text" value="<%=@user.email%>"/>
-  <br/>
+  <input id="user_email" name="user[email]" type="text" />
+  <br />
 
   <label for="user_password">Password:</label><br/>
   <input id="user_password" name="user[password]" type="password" />
@@ -17,6 +15,9 @@
   <input id="user_password_confirmation" name="user[password_confirmation]" type="password" />
   <br/>
 
-  <input type="submit" value="Edit Post" />
+  <label  for="user_admin">Admin:</label><br/>
+  <input id="user_admin" name="user[admin]" type="text">
+  <br />
 
+  <input type="submit" value="Create User" />
 </form>

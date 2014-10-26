@@ -36,13 +36,17 @@ helpers do
   end
 
   def delete_user(user_id)
-    erb :_delete_user, locals: { user_id: user_id }
+    erb :"form/user/_delete_user", locals: { user_id: user_id }
   end
 
 
   def mark_down(post)
    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, quote: true) 
    markdown.render(post)
+  end
+
+  def admin?(user_id)
+    User.find(user_id).admin?
   end
 
 end
@@ -57,13 +61,13 @@ end
 
 class User < ActiveRecord::Base
 
-  before_save { |user| user.email = email.downcase}
+  before_save { |user| user.email = email.downcase ; user.name = name.downcase }
 
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :name, presence: true, length: { maximum: 50 }, uniqueness: { case_sensitive: false }
   VALID_EMAIL = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with: VALID_EMAIL },uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 6 }
-  validates :password_confirmation, presence: true
+  validates :password, presence: true, length: { minimum: 6 }, on: create
+  validates :password_confirmation, presence: true, on: create
   
   has_many :posts
 
@@ -140,15 +144,15 @@ end
 
 
 get "/signup" do
-  erb :"form/sign_up"
+  erb :"form/user/new"
 end
 
 post "/users" do
-  user = User.new(params[:user]) #需改进，避免mass assignment
+  user = User.new(params[:user].delete_if { |key,value| key == "admin" })
   if user.save
     redirect '/'
   else
-    redirect '/signup'
+    redirect 'form/user/new'
   end
 
 end
@@ -164,10 +168,10 @@ get "/logout" do
 end
 
 post "/sessions" do
-  user = User.find_by_email(params[:session][:email])
-  if user && user.authenticate(params[:session][:password])
+  @user = User.find_by_email(params[:session][:email])
+  if @user && @user.authenticate(params[:session][:password])
     session[:user_id] = user.id
-    redirect '/'
+    redirect "/#{@user.name}"
   else
     redirect '/login'
   end
@@ -176,7 +180,7 @@ end
 get "/:name" do
   is_login
   if (@user = User.find_by_name(params[:name]))
-    erb :"form/user"
+    erb :"form/user/show"
   else
     erb :"pages/404"
   end
@@ -185,7 +189,7 @@ end
 get "/account/edit" do
   is_login
   @user = User.find(session[:user_id])
-  erb :"form/user_edit"
+  erb :"form/user/edit"
 end
 
 patch "/users" do
@@ -194,18 +198,20 @@ patch "/users" do
   if @user.update_attributes(params[:user])
     redirect "/#{@user.name}"
   else
-    erb :"form/user_edit" # like render
+    erb :"form/user/edit" # like render
   end
 end
 
 delete "/users/:id" do
   is_login
-  User.find(params[:id]).destroy
-  redirect "/"
+  if User.find(session[:user_id]).admin?
+    User.find(params[:id]).destroy
+  else
+    erb :"pages/404"
+  end
 end
   
 
-# 无法更新部分，必须也要更新密码，如何解决？
 
 # page routes
 #
