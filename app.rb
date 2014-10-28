@@ -19,8 +19,8 @@ helpers do
     request.path_info =~ /\/posts\/\d+$/
   end
 
-  def delete_post_button(post_id)
-    erb :_delete_post_button, locals: { post_id: post_id}
+  def delete_post(post_id)
+    erb :"form/topic/_delete_post", locals: { post_id: post_id}
   end
 
   def post_each(posts)
@@ -28,7 +28,7 @@ helpers do
   end
 
   def new_edit_form(post)
-    erb :"form/_form", locals: { post: post }
+    erb :"form/topic/_form", locals: { post: post }
   end
 
   def login? 
@@ -37,6 +37,10 @@ helpers do
 
   def delete_user(user_id)
     erb :"form/user/_delete_user", locals: { user_id: user_id }
+  end
+
+  def delete_comment(comment_id)
+    erb :"form/topic/_delete_comment", locals: { comment_id: comment_id}
   end
 
 
@@ -55,6 +59,9 @@ class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 3}
   validates :body, presence: true
   validates :tag, presence: true
+  validates :user_id , presence: true
+
+  has_many :comments, dependent: :destroy
   belongs_to :user
 
 end 
@@ -69,13 +76,17 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }, on: create
   validates :password_confirmation, presence: true, on: create
   
-  has_many :posts
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   has_secure_password
 end
 
 class Comment < ActiveRecord::Base
   validates :body, presence: true
+  validates :user_id, presence: true
+  validates :post_id, presence: true
+
   belongs_to :post
   belongs_to :user
 end
@@ -96,43 +107,56 @@ get "/topics" do
   erb :"form/topics"
 end
 
-get "/posts/new" do
+get "/topics/new" do
   is_login
   @post = Post.new
-  erb :"form/new"
+  erb :"form/topic/new"
 end
 
-post "/posts" do
+post "/topics" do
   is_login
-  @post = Post.new(params[:post])
+  user = User.find(session[:user_id])
+  @post = user.posts.build(params[:post])
   if @post.save
-    redirect "/posts/#{@post.id}"
+    redirect "/topics/#{@post.id}"
   else
-    erb :"form/new"
+    erb :"form/topic/new"
   end
 end
 
-get "/posts/:id/edit" do
-  is_login
-  @post = Post.find(params[:id])
-  erb :"form/edit"
+get "/topics/:id" do
+  if (@post = Post.find_by_id(params[:id]))
+    @comments = @post.comments
+    erb :"form/topic/show"
+  else
+    erb :"pages/404"
+  end
 end
 
-put "/posts/:id" do
+get "/topics/:id/edit" do
   is_login
-  post = Post.find(params[:id])
-  if post.update_attributes(params[:post])
-    redirect "/posts/#{post.id}"
+  @post = User.find(session[:user_id]).posts.find(params[:id])
+  erb :"form/topic/edit"
+end
+
+put "/topics/:id" do
+  is_login
+  post = User.find(session[:user_id]).posts.find(params[:id])
+  if post.update_attributes(params[:post].delete_if {|key, value| key == "user_id"})
+    redirect "/topics/#{post.id}"
   else
-    erb :"form/edit"
+    erb :"form/topic/edit"
   end
 end
 
 
-delete "/posts/:id" do
+delete "/topics/:id" do
   is_login
-  @post = Post.find(params[:id]).destroy
-  redirect "/"
+  if User.find(session[:user_id]).admin?
+    @post = Post.find(params[:id]).destroy
+  else
+    redirect "/"
+  end
 end
 
 get "/tags/:tag" do
@@ -170,7 +194,7 @@ end
 post "/sessions" do
   @user = User.find_by_email(params[:session][:email])
   if @user && @user.authenticate(params[:session][:password])
-    session[:user_id] = user.id
+    session[:user_id] = @user.id
     redirect "/#{@user.name}"
   else
     redirect '/login'
@@ -195,7 +219,7 @@ end
 patch "/users" do
   is_login
   @user = User.find(session[:user_id])
-  if @user.update_attributes(params[:user])
+  if @user.update_attributes(params[:user].delete_if{ |key,value| key == "admin"})
     redirect "/#{@user.name}"
   else
     erb :"form/user/edit" # like render
@@ -210,11 +234,33 @@ delete "/users/:id" do
     erb :"pages/404"
   end
 end
-  
 
+#comment routes
+  
+post "/comments/:id" do
+  is_login
+  comment = User.find(session[:user_id]).comments.build(params[:comment])
+  comment.post_id = params[:id]
+  if comment.save
+    redirect "/topics/#{params[:id]}"
+  else
+    redirect "/"
+  end
+end
+
+delete "/comments/:id" do
+  is_login
+  if User.find(session[:user_id]).admin?
+    post = Comment.find(params[:id]).post
+    Comment.find(params[:id]).destroy
+    redirect "/topics/#{post.id}"
+  else
+    erb :"pages/404"
+  end
+end
 
 # page routes
-#
+
 get "/about" do
   erb :"pages/about"
 end

@@ -1,0 +1,17 @@
+<p><%= @post.title %></p>
+<p><%= @post.body %></p>
+<%= delete_post(@post.id)%>
+
+<h1>Comments:</h1>
+<% @comments.each do |comment| %>
+  <p><%= comment.body %><%= delete_comment(comment.id)%></p>
+<% end %>
+
+
+<form action="/comments/<%= @post.id %>" method="post">
+  <label for="comment_body">Create Comment:</label><br/> 
+  <input id="comment_body" name="comment[body]" type="text"  /><br />
+
+  <input type="submit" value="Create Comment" />
+
+</form>
