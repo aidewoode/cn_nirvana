@@ -15,3 +15,9 @@ function activeLink() {
 
 }
 activeLink();
+
+function replyOne(username) {
+  var content = "@"+username+" ";
+  var input = document.getElementById("comment_body");
+  input.value = content;
+}

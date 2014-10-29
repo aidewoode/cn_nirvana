@@ -12,6 +12,7 @@ gem "tux"
 group :development do
   gem "sqlite3"
   gem "shotgun"
+  gem "did_you_mean"
 end
 
 group :production do

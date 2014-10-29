@@ -1,4 +1,3 @@
-
 require "sinatra"
 require "sinatra/activerecord"
 require "redcarpet"
@@ -43,14 +42,21 @@ helpers do
     erb :"form/topic/_delete_comment", locals: { comment_id: comment_id}
   end
 
+  def delete_notification(notification_id)
+    erb :"form/user/_delete_notification", locals: { notification_id: notification_id}
+  end
 
   def mark_down(post)
    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, quote: true) 
    markdown.render(post)
   end
 
-  def admin?(user_id)
-    User.find(user_id).admin?
+  def admin?
+    User.find(session[:user_id]).admin?
+  end
+
+  def current_user?(user_id)
+    User.find(user_id) == User.find(session[:user_id])
   end
 
 end
@@ -78,6 +84,7 @@ class User < ActiveRecord::Base
   
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   has_secure_password
 end
@@ -91,8 +98,17 @@ class Comment < ActiveRecord::Base
   belongs_to :user
 end
 
+class Notification < ActiveRecord::Base
+  validates :user_id, presence: true
+  validates :comment_id, presence: true
+  belongs_to :user
+end
+
+
+
+
 ## post routes
-#
+
 def is_login
   redirect '/login' unless login?
 end
@@ -195,32 +211,37 @@ post "/sessions" do
   @user = User.find_by_email(params[:session][:email])
   if @user && @user.authenticate(params[:session][:password])
     session[:user_id] = @user.id
-    redirect "/#{@user.name}"
+    redirect "/account/#{@user.name}"
   else
     redirect '/login'
   end
 end
 
-get "/:name" do
+get "/account/:name" do
   is_login
   if (@user = User.find_by_name(params[:name]))
+    @comments = Comment.all
     erb :"form/user/show"
   else
     erb :"pages/404"
   end
 end
 
-get "/account/edit" do
+get "/account/:name/edit" do
   is_login
+  if (User.find(session[:user_id]) == User.find_by_name(params[:name]))
   @user = User.find(session[:user_id])
   erb :"form/user/edit"
+  else
+    erb :"pages/404"
+  end
 end
 
 patch "/users" do
   is_login
   @user = User.find(session[:user_id])
   if @user.update_attributes(params[:user].delete_if{ |key,value| key == "admin"})
-    redirect "/#{@user.name}"
+    redirect "/account/#{@user.name}"
   else
     erb :"form/user/edit" # like render
   end
@@ -242,6 +263,7 @@ post "/comments/:id" do
   comment = User.find(session[:user_id]).comments.build(params[:comment])
   comment.post_id = params[:id]
   if comment.save
+    Notification.create(user_id: Post.find(params[:id]).user.id, comment_id: comment.id )
     redirect "/topics/#{params[:id]}"
   else
     redirect "/"
@@ -254,6 +276,30 @@ delete "/comments/:id" do
     post = Comment.find(params[:id]).post
     Comment.find(params[:id]).destroy
     redirect "/topics/#{post.id}"
+  else
+    erb :"pages/404"
+  end
+end
+
+# notification routes
+
+get "/notifications/:id" do
+  is_login
+  if (User.find(session[:user_id]) == User.find(Notification.find(params[:id]).user_id))
+    noti = Notification.find(params[:id])
+    noti.read = true
+    noti.save
+    redirect "/topics/#{Comment.find(noti.comment_id).post.id}"
+  else
+    erb :"pages/404"
+  end
+end
+
+delete "/notifications/:id" do
+  is_login
+  if (User.find(session[:user_id]) == User.find(Notification.find(params[:id]).user_id))
+    Notification.find(params[:id]).destroy
+    redirect "/account/#{User.find(session[:user_id]).name}"
   else
     erb :"pages/404"
   end

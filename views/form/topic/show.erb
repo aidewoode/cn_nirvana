@@ -4,7 +4,8 @@
 
 <h1>Comments:</h1>
 <% @comments.each do |comment| %>
-  <p><%= comment.body %><%= delete_comment(comment.id)%></p>
+  <p><%= comment.body %> | <%= comment.user.name %> | <a href="#" onclick="replyOne('<%= comment.user.name %>')">reply</a><p>
+  <%= delete_comment(comment.id)%>
 <% end %>
 
 
@@ -15,3 +16,4 @@
   <input type="submit" value="Create Comment" />
 
 </form>
+<script src="/js/my.js"> </script>

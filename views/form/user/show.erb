@@ -1,8 +1,17 @@
 <div class="user_info">
   <p><%= @user.name %></p>
   <p><%= @user.email%></p>
-  <% if admin?(@user.id) %>
+  <% if admin?%>
     <%= delete_user(@user.id) %>
   <% end %>
   <p><%= @user.admin %></p>
+
+  <% if current_user?(@user.id) %>
+    <p>Notification: </p>
+    <% @user.notifications.each do |n|%>
+      <p>Your post <a href="/notifications/<%= n.id %>"><%= @comments.find(n.comment_id).post.title%></a>, commented by <%= @comments.find(n.comment_id).user.name %></p>
+      <%= delete_notification(n.id) %>
+    <% end %>
+  <% end %>
+
 </div>

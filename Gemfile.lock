@@ -19,8 +19,11 @@ GEM
     bond (0.5.1)
     builder (3.2.2)
     daemons (1.1.9)
+    did_you_mean (0.8.0)
+      interception
     eventmachine (1.0.3)
     i18n (0.6.11)
+    interception (0.5)
     json (1.8.1)
     minitest (5.4.0)
     pg (0.17.1)
@@ -68,6 +71,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   bcrypt
+  did_you_mean
   pg
   redcarpet
   shotgun
