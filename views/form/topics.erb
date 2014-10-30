@@ -1,30 +1,45 @@
-<div class="all_topics">
-  <% @posts.each do |post| %>
-    <div class="topic">
-      <div class="avatar">
-        <img src="/picture/logo.png" alt="avatar" />
-      </div>
-      <div class="content">
-        <div class="replies">
-          <a href="#"><%= post.comments.count %></a>
+<div class="all_content">
+  <ul class="all_topics">
+    <% @posts.each do |post| %>
+      <% if post.top %>
+        <% liclass = "top_topic"%>
+      <% elsif post.essence %>
+        <% liclass = "essence_topic"%>
+      <% else %>
+        <% liclass = "topic "%>
+      <% end %>
+      <li class="<%= liclass %>">
+      <% count = post.comments.count %>
+        <a href="#" class="reply"><span><%= count %></span></a>
+        <div class="avatar">
+          <img src="/picture/logo.png" alt="avatar" />
         </div>
-        <div class="infos">
+        <div class="content">
           <div class="title">
-            <p><a href="/topics/<%= post.id %>"><%= post.title %></a></p>
+            <a href="/topics/<%= post.id %>"><%= post.title %></a>
           </div>
           <div class="info">
-            <p><a href="/account/<%= post.user.name %>"><%= post.user.name %></a></p>
-            <p><%= pretty_date(post.created_at) %></p>
+            <a href="/tags/<%= post.tag %>"><%= post.tag %></a>
+            <span> . </span>
+            <% if (count == 0) %>
+              <span>由</span>
+              <a href="/account/<%= post.user.name %>"><%= post.user.name %></a>
+              <span>发表</span>
+              <span>.</span>
+              <span><%= time_ago(post.created_at)%></span>
+            <% else %>
+              <span>最后由</span>
+              <% comment = @comments.find(post.last_reply)%>
+              <% user_name = comment.user.name %>
+              <a href="/account/<%= user_name %>"><%= user_name %></a>
+              <span>回复</span>
+              <span>.</span>
+              <span><%= time_ago(comment.created_at)%></span>
+            <% end %>
           </div>
         </div>
-        <div class="empty">
-          
-        </div>
-      </div>
-      <div class="empty">
-        
-      </div>
-    </div>
-  <% end %>
-  
+      </li>
+    <% end %>
+    
+  </ul>
 </div>

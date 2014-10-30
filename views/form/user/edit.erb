@@ -9,7 +9,14 @@
   <input id="user_email" name="user[email]" type="text" value="<%=@user.email%>"/>
   <br/>
 
-
   <input type="submit" value="Edit Post" />
+
+</form>
+
+<form action="http://upload.qiniu.com/" enctype="multipart/form-data" method="post">
+  <input type="hidden" name="key"  value="avatar.<%= @user.id %>" />
+  <input type="hidden" name="token" value="<%= @uptoken %>" />
+  <input type="file" name="file" />
+  <input type="submit"  value="upload" />
 
 </form>

@@ -1,6 +1,7 @@
 require "sinatra"
 require "sinatra/activerecord"
 require "redcarpet"
+require "qiniu"
 require "./environments"
 
 enable :sessions
@@ -57,6 +58,26 @@ helpers do
 
   def current_user?(user_id)
     User.find(user_id) == User.find(session[:user_id])
+  end
+
+  def current_user 
+    @user = User.find(session[:user_id])
+  end
+
+  def time_ago(start_time)
+    diff = Time.now - start_time
+    case diff
+    when 0..59
+       "一分钟前"
+    when 60..(3600-1)
+       "#{(diff/60).to_i} 分钟前"
+    when 3600..(3600*24-1)
+       "#{(diff/3600).to_i} 小时前"
+    when (3600*24)..(3600*24*30)
+       "#{(diff/(3600*24).to_i)} 天前"
+    else
+       start_time.strftime( "%Y/%m/%d")
+    end
   end
 
 end
@@ -120,6 +141,7 @@ end
 
 get "/topics" do
   @posts = Post.order("created_at DESC") 
+  @comments = Comment.all
   erb :"form/topics"
 end
 
@@ -231,6 +253,8 @@ get "/account/:name/edit" do
   is_login
   if (User.find(session[:user_id]) == User.find_by_name(params[:name]))
   @user = User.find(session[:user_id])
+  put_policy = Qiniu::Auth::PutPolicy.new("cnnirvana")
+  @uptoken = Qiniu::Auth.generate_uptoken(put_policy)
   erb :"form/user/edit"
   else
     erb :"pages/404"
@@ -264,6 +288,9 @@ post "/comments/:id" do
   comment.post_id = params[:id]
   if comment.save
     Notification.create(user_id: Post.find(params[:id]).user.id, comment_id: comment.id )
+    post = Post.find(params[:id])
+    post.last_reply = comment.id
+    post.save
     redirect "/topics/#{params[:id]}"
   else
     redirect "/"

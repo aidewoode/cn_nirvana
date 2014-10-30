@@ -8,6 +8,7 @@ gem "bcrypt"
 gem "thin"
 gem "redcarpet"
 gem "tux"
+gem "qiniu"
 
 group :development do
   gem "sqlite3"

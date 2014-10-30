@@ -144,7 +144,8 @@ header.index {
   z-index: 30;
   top: 0;
   width: 100%;
-  background-color: wheat;
+  border-bottom: 1.5px solid #ddd;
+  background-color: white;
 }
 
 nav.global_nav {
@@ -159,6 +160,7 @@ nav.global_nav h1 {
   margin: 0;
   font-size: 1.8em;
   font-weight: 500;
+  color: #00cc66;
 }
 
 nav.global_nav ul {
@@ -180,11 +182,87 @@ nav.global_nav ul li:first-child {
 
 nav.global_nav ul a {
   text-decoration: none;
-  color: red;
   font-size: 1em;
   letter-spacing: 1px;
   vertical-align: middle;
+  color: #333;
 }
+
+nav.global_nav ul a:hover {
+  color: #00cc66;
+}
+
+nav.global_nav div a {
+  text-decoration: none;
+  vertical-align: middle;
+  letter-spacing: 2px;
+}
+
+nav.global_nav div.signup { 
+  float: right;
+  background-color: #f60;
+  padding: 0 20px;
+}
+
+nav.global_nav div.signup:hover {
+  opacity: 0.7;
+}
+
+nav.global_nav div.signup a {
+  color: white;
+}
+
+
+nav.global_nav div.login {
+  float: right;
+  margin-right: 30px;
+  border-right: 1px solid #eee;
+  padding-right: 30px;
+}
+
+nav.global_nav div.login a {
+ color: #000;
+}
+
+nav.global_nav div.login a:hover {
+  color: #f60;
+}
+
+nav.global_nav div.notification {
+  float: right;
+}
+
+nav.global_nav div.account {
+  float: right;
+}
+nav.global_nav div.notification a {
+  display: block;
+}
+
+nav.global_nav div.notification span {
+  padding: 6px 10px;
+  background-color: #f20;
+  color: white;
+  border-radius: 15px;
+  letter-spacing: normal;
+}
+
+nav.global_nav div.notification a:hover {
+  opacity: 0.7;
+}
+
+nav.global_nav div.account {
+  margin-right: 10px;
+  font-size: 1.1em;
+  color: #333;
+}
+
+nav.global_nav div.account a:hover {
+  color: #f06
+}
+
+
+
 
 div.empty {
   clear: both;
@@ -197,62 +275,99 @@ section.index {
 
 footer.index {
   text-align: center;
-  border-top: 1px solid black;
+  border-top: 1.5px solid #bbb;
 }
 
 footer.index p {
-  margin: 10px 0;
+  margin: 5px 0;
+  color: #aaa
 }
+
+/*************************************/
 
 /* topcis page style */
 
-div.all_topics {
+div.all_content {
   max-width: 700px;
   margin: auto;
   padding-top: 50px;
 }
 
-div.all_topics div.avatar img {
-  width: 80px;
-  float: left;
-  margin: 3px 0 3px 5px;
-
-}
-
-div.all_topics div.topic {
-  margin-bottom: 30px;
-  border: 2px solid black;
-  border-radius: 10px;
-}
-
-div.all_topics div.content {
-  padding-left: 100px;
-}
-
-div.all_topics div.replies {
-  float: right;
-  margin-top: 23px;
-  margin-right: 30px;
-}
-
-div.all_topics div.replies a {
-  text-decoration: none;
-  font-size: 1em;
-  color: red;
-  letter-spacing: 1px;
-
-}
-
-div.all_topics div.infos {
-  padding-right: 50px;
-}
-
-div.all_topics div.title {
-  margin-bottom: 15px;
-  margin-top: 5px;
-}
-
-div.all_topics div.infos p {
+div.all_content ul {
   margin: 0;
-  font-size: 1.1em;
+  padding: 0;
+  list-style: none;
 }
+
+div.all_content ul a {
+ text-decoration: none;
+}
+
+ul.all_topics li {
+  display: block;
+  margin-bottom: 25px;
+}
+
+ul.all_topics li.topic {
+  border-left: 5px solid rgb(0,218,67);
+}
+
+ul.all_topics li.top_topic {
+  border-left: 5px solid rgb(255,63,74);
+}
+
+ul.all_topics li.essence_topic {
+  border-left: 5px solid rgb(255,193,0);
+}
+
+ul.all_topics div.avatar {
+  float: left;
+  margin-left: 10px;
+  margin-right: 15px;
+}
+
+ul.all_topics div.avatar img {
+  width: 60px;
+  display: block;
+
+}
+
+ul.all_topics a.reply {
+  float: right;
+  display: inline-block;
+  margin: 15px 20px;
+}
+
+ul.all_topics a.reply span {
+  padding: 6px 10px;
+  background-color: #f20;
+  border-radius: 15px;
+  color: white;
+}
+
+ul.all_topics div.content {
+  margin-right: 70px;
+}
+
+ul.all_topics div.title a {
+  color: #066;
+  font-size: 1.1em;
+  letter-spacing: 2px;
+}
+
+ul.all_topics div.title a:hover {
+  text-decoration: underline;
+}
+
+ul.all_topics div.info {
+  color: #aaa;
+  font-size: 0.9em;
+}
+
+ul.all_topics div.info a {
+  color: #555;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+
