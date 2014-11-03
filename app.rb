@@ -68,13 +68,13 @@ helpers do
     diff = Time.now - start_time
     case diff
     when 0..59
-       "一分钟前"
+       "刚刚不久"
     when 60..(3600-1)
        "#{(diff/60).to_i} 分钟前"
     when 3600..(3600*24-1)
        "#{(diff/3600).to_i} 小时前"
     when (3600*24)..(3600*24*30)
-       "#{(diff/(3600*24).to_i)} 天前"
+       "#{((diff/(3600*24)).to_i)} 天前"
     else
        start_time.strftime( "%Y/%m/%d")
     end
@@ -135,14 +135,10 @@ def is_login
 end
 
 get "/" do
-  @posts = Post.order("created_at DESC") # 需要改进。
-  erb :"form/index"
-end
-
-get "/topics" do
-  @posts = Post.order("created_at DESC") 
+  @top_posts = Post.where(top: true).order("created_at DESC")
+  @posts = Post.where(top: false).order("last_reply_time DESC").order("created_at DESC")
   @comments = Comment.all
-  erb :"form/topics"
+  erb :"form/index"
 end
 
 get "/topics/new" do
@@ -164,7 +160,7 @@ end
 
 get "/topics/:id" do
   if (@post = Post.find_by_id(params[:id]))
-    @comments = @post.comments
+    @comments = @post.comments.order("created_at DESC")
     erb :"form/topic/show"
   else
     erb :"pages/404"
@@ -282,15 +278,18 @@ end
 
 #comment routes
   
-post "/comments/:id" do
+post "/comments/:id" do # need to change
   is_login
   comment = User.find(session[:user_id]).comments.build(params[:comment])
   comment.post_id = params[:id]
   if comment.save
-    Notification.create(user_id: Post.find(params[:id]).user.id, comment_id: comment.id )
-    post = Post.find(params[:id])
-    post.last_reply = comment.id
-    post.save
+      post = Post.find(params[:id])
+      post.last_reply = comment.id
+      post.last_reply_time = comment.created_at
+      post.save
+    if ( comment.user != Post.find(params[:id]).user )
+      Notification.create(user_id: Post.find(params[:id]).user.id, comment_id: comment.id )
+    end
     redirect "/topics/#{params[:id]}"
   else
     redirect "/"

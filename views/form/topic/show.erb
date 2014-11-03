@@ -1,19 +1,93 @@
-<p><%= @post.title %></p>
-<p><%= @post.body %></p>
-<%= delete_post(@post.id)%>
+<div class="all_content">
+  <% if @post.top %>
+    <% titleclass = "topic_title top"%>
+  <% elsif @post.essence %>
+    <% titleclass = "topic_title essence"%>
+  <% else %>
+    <% titleclass = "topic_title"%>
+  <% end %>
+  <div class="<%= titleclass %>">
+    <div class="avatar"><img src="/picture/logo.png"></div>
+    <h1><%= @post.title %></h1>
+    <div class="topic_info">
+      <a href="/tag/<%= @post.tag %>"><%= @post.tag %></a>
+      <span>.</span>
+      <span>由</span>
+      <a href="/account/<%= @post.user.name%>"><%= @post.user.name%></a>
+      <span>发表</span>
+      <span>.</span>
+      <span><%= time_ago(@post.created_at) %></span>
+    </div>
+    <div class="empty">
+      
+    </div>
+  </div>
+  <div class="topic_body entry">
+    <%= @post.body %>
+  </div>
+  <div class="topic_option">
+    <% if login?&&current_user?(@post.user.id) %>
+      <a href="/topics/<%= @post.id %>/edit">修改</a>
+    <% end %>
+    <% if login?&&admin? %>
+      <%= delete_post(@post.id)%>
+    <% end %>
+    <div class="empty">
+    </div>
+  </div>
 
-<h1>Comments:</h1>
-<% @comments.each do |comment| %>
-  <p><%= comment.body %> | <%= comment.user.name %> | <a href="#" onclick="replyOne('<%= comment.user.name %>')">reply</a><p>
-  <%= delete_comment(comment.id)%>
-<% end %>
+  <div class="comment_total">
+    <p>共<b><%= @post.comments.count %></b>条回复：</p>
+  </div>
+  <ul class="comments">
+  <% @comments.each do |comment| %>
+    <li class="comment">
+      <div class="avatar">
+        <img src="/picture/logo.png" alt="avatar" />
+      </div>
+      <div class="comment_info">
+        <% if login? %>
+          <a href="#" class="reply" onclick="replyOne('<%= comment.user.name %>')">回复</a>
+        <% end %>
+        <a href="/account/<%= comment.user.name %>"><%= comment.user.name %></a>
+        <span> </span>
+        <span>.</span>
+        <span><%= time_ago(comment.created_at)%></span>
+      </div>
+      <div class="comment_content">
+        <% if login?&&admin?%>
+          <%= delete_comment(comment.id)%>
+        <% end %>
+        <div class="entry"><%= comment.body %></div>
+      </div>
+    </li>
+  <% end %>
+  </ul>
 
+  <% if login? %>
+    <form class="comment" action="/comments/<%= @post.id %>" method="post">
+      <label for="comment_body">发表你的回复：</label><br/> 
+      <textarea id="comment_body" name="comment[body]" row="5"></textarea><br />
 
-<form action="/comments/<%= @post.id %>" method="post">
-  <label for="comment_body">Create Comment:</label><br/> 
-  <input id="comment_body" name="comment[body]" type="text"  /><br />
+      <div class="submit">
+        <input type="submit" value="发表回复" />
+      </div>
 
-  <input type="submit" value="Create Comment" />
-
-</form>
-<script src="/js/my.js"> </script>
+    </form>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/module.min.js"></script>
+    <script type="text/javascript" src="/js/uploader.min.js"></script>
+    <script type="text/javascript" src="/js/simditor.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var editor = new Simditor(
+          {
+            textarea: $('#comment_body')
+          }
+          );
+    </script>
+  <% else %>
+    <div class="login_alert">
+      <p>你需要<a href="/login">登录</a>才可发表评论或者<a href="/signup">注册</a>一个新的帐号</p>
+    </div>
+  <% end %>
+</div>

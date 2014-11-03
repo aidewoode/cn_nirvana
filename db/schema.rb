@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141030070742) do
+ActiveRecord::Schema.define(version: 20141031130237) do
 
   create_table "comments", force: true do |t|
     t.text     "body"
@@ -41,9 +41,10 @@ ActiveRecord::Schema.define(version: 20141030070742) do
     t.datetime "updated_at"
     t.string   "tag"
     t.integer  "user_id"
-    t.boolean  "essence",    default: false
-    t.boolean  "top",        default: false
+    t.boolean  "essence",         default: false
+    t.boolean  "top",             default: false
     t.integer  "last_reply"
+    t.datetime "last_reply_time"
   end
 
   add_index "posts", ["user_id"], name: "index_posts_on_user_id"

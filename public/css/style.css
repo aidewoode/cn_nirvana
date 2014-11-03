@@ -194,7 +194,7 @@ nav.global_nav ul a:hover {
 
 nav.global_nav div a {
   text-decoration: none;
-  vertical-align: middle;
+  vertical-align: baseline;
   letter-spacing: 2px;
 }
 
@@ -210,6 +210,7 @@ nav.global_nav div.signup:hover {
 
 nav.global_nav div.signup a {
   color: white;
+  vertical-align: middle;
 }
 
 
@@ -222,6 +223,7 @@ nav.global_nav div.login {
 
 nav.global_nav div.login a {
  color: #000;
+ vertical-align: middle;
 }
 
 nav.global_nav div.login a:hover {
@@ -230,6 +232,7 @@ nav.global_nav div.login a:hover {
 
 nav.global_nav div.notification {
   float: right;
+  margin-right: 10px;
 }
 
 nav.global_nav div.account {
@@ -237,15 +240,19 @@ nav.global_nav div.account {
 }
 nav.global_nav div.notification a {
   display: block;
-}
-
-nav.global_nav div.notification span {
-  padding: 6px 10px;
   background-color: #f20;
   color: white;
   border-radius: 15px;
   letter-spacing: normal;
 }
+#one_number {
+  padding: 0px 10px;
+}
+
+#double_number {
+  padding: 0px 5px;
+}
+
 
 nav.global_nav div.notification a:hover {
   opacity: 0.7;
@@ -259,6 +266,19 @@ nav.global_nav div.account {
 
 nav.global_nav div.account a:hover {
   color: #f06
+}
+
+nav.global_nav div.logout {
+  float: right;
+  padding-left: 10px;
+  border-left: 1px solid #eee;
+}
+
+nav.global_nav div.logout a {
+  color: #0c6;
+}
+nav.global_nav div.logout a:hover {
+  color: #333;
 }
 
 
@@ -331,19 +351,19 @@ ul.all_topics div.avatar img {
   display: block;
 
 }
-
-ul.all_topics a.reply {
+ul.all_topics div.reply {
   float: right;
-  display: inline-block;
-  margin: 15px 20px;
 }
 
-ul.all_topics a.reply span {
-  padding: 6px 10px;
+ul.all_topics div.reply a {
+  display: inline-block;
+  margin: 15px 20px;
   background-color: #f20;
   border-radius: 15px;
   color: white;
 }
+
+
 
 ul.all_topics div.content {
   margin-right: 70px;
@@ -370,4 +390,179 @@ ul.all_topics div.info a {
   font-weight: 600;
 }
 
+/* topics show page style */
+div.topic_title {
+  border-left: 5px solid rgb(0,218,67)
+}
 
+div.top {
+  border-color: rgb(255,63,74)
+}
+
+div.essence {
+  border-color: rgb(255,193,0)
+}
+div.topic_title div.avatar {
+  float: right;
+}
+
+div.topic_title div.avatar img {
+  width: 60px;
+  display: block;
+}
+
+div.topic_title h1 {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: 500;
+  padding-bottom: 5px;
+  margin-right: 90px;
+  color: #066;
+  word-wrap: break-word;
+  margin-left: 10px;
+}
+
+div.topic_title div.topic_info {
+  border-top: 1px solid #eee;
+  margin-right: 90px;
+  margin-left: 15px;
+  color: #aaa;
+  font-size: 0.9em;
+}
+
+div.topic_title div.topic_info a {
+  text-decoration: none;
+  color: #555;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  
+}
+
+div.topic_body {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+div.topic_option input {
+  float: right;
+  margin-right: 30px;
+  background: #f20;
+  border: 1px solid;
+  border-radius: 5px;
+  color: white;
+  outline: none;
+}
+
+div.topic_option a {
+  float: right;
+  background-color: #0c6;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 0 4px;
+  margin-right: 30px;
+}
+
+div.comment_total {
+  color: #444;
+  margin-top: 35px;
+}
+
+div.comment_total p {
+  margin: 0;
+}
+
+li.comment {
+  display: block;
+  margin-bottom: 25px;
+}
+
+li.comment:first-child {
+  margin-top: 30px;
+}
+
+li.comment div.avatar {
+  float: left;
+  margin-right: 15px;
+}
+
+li.comment div.avatar img {
+  width: 60px;
+  display: block;
+}
+li.comment div.comment_info {
+  color: #aaa;
+  font-size: 0.9em;
+}
+
+li.comment div.comment_info a {
+  color: #555;
+  font-weight: 600;
+}
+
+li.comment div.comment_info a.reply {
+  float: right;
+  color: #0c6;
+  padding: 0px 9px;
+  font-size: 0.1em;
+}
+
+li.comment div.comment_content div {
+  max-width: 550px;
+}
+
+li.comment div.comment_content form {
+  float: right;
+}
+
+li.comment div.comment_content input {
+  border-radius: 5px;
+  background-color: #f20;
+  border: 0px;
+  color: white;
+  font-size: 0.5em;
+  font-weight: 600;
+  padding: 3px 9px;
+}
+
+div.all_content form.comment {
+  margin-top: 60px;
+}
+
+div.all_content form.comment label {
+  display: block;
+}
+
+div.all_content form.comment div.submit {
+  text-align: center;
+}
+
+div.all_content form.comment div.submit input {
+  background-color: #0c6;
+  border: 0px;
+  margin-bottom: 10px;
+  padding: 2px 10px;
+  outline: none;
+  color: white;
+}
+
+div.all_content form.comment div.submit input:hover {
+  opacity: 0.7;
+}
+
+div.login_alert {
+  text-align: center;
+  margin-top: 65px;
+  margin-bottom: 50px;
+  background-color: #ffc;
+  padding: 6px 0;
+  color: #666;
+}
+div.login_alert p {
+  margin: 0;
+}
+
+div.login_alert p a {
+  color: #f60;
+  text-decoration: none;
+}

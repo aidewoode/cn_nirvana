@@ -9,8 +9,8 @@
   <% if current_user?(@user.id) %>
     <p>Notification: </p>
     <% @user.notifications.each do |n|%>
-      <p>Your post <a href="/notifications/<%= n.id %>"><%= @comments.find(n.comment_id).post.title%></a>, commented by <%= @comments.find(n.comment_id).user.name %></p>
-      <%= delete_notification(n.id) %>
+        <p>Your post <a href="/notifications/<%= n.id %>"><%= @comments.find(n.comment_id).post.title%></a>, commented by <%= @comments.find(n.comment_id).user.name %></p>
+        <%= delete_notification(n.id) %>
     <% end %>
   <% end %>
 
