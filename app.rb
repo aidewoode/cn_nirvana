@@ -11,8 +11,8 @@ set :session_secret, "super secret"
 helpers do
 
 
-  def pretty_date(time)
-    time.strftime("%d %b %Y")
+  def pretty_time(time)
+    time.strftime("%Y/%m/%d")
   end
 
   def post_show_pages? 

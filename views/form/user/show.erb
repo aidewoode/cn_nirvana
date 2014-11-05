@@ -1,17 +1,78 @@
 <div class="user_info">
-  <p><%= @user.name %></p>
-  <p><%= @user.email%></p>
-  <% if admin?%>
-    <%= delete_user(@user.id) %>
-  <% end %>
-  <p><%= @user.admin %></p>
-
-  <% if current_user?(@user.id) %>
-    <p>Notification: </p>
-    <% @user.notifications.each do |n|%>
-        <p>Your post <a href="/notifications/<%= n.id %>"><%= @comments.find(n.comment_id).post.title%></a>, commented by <%= @comments.find(n.comment_id).user.name %></p>
-        <%= delete_notification(n.id) %>
+  <div class="user_header">
+    <div class="avatar">
+      <img src="/picture/logo.png" />
+    </div>
+    <div class="username">
+      <% if @user.fake_name.nil? %>
+        <%= @user.name%>
+      <% else %>
+        <%= @user.fake_name %>
+      <% end %>
+    </div>
+    <div class="usernumber">
+      <div class="number">第<%=@user.id%>位会员</div>
+      <div class="since">于<%= pretty_time(@user.created_at)%>加入</div>
+    </div>
+    <div class="empty">
+      
+    </div>
+    
+  </div>
+  <div class="detail">
+    <ul>
+      <li>Id: <%= @user.name %></li>
+      <li>Email: <%= @user.email %></li>
+      <% if !@user.city.nil? %>
+        <li>City: <%= @user.city %></li>
+      <% end %>
+      <% if !@user.info.nil? %>
+        <li>Info: <%= @user.info %></li>
+      <% end %>
+    </ul>
+    <% if admin?&&!@user.admin?%>
+      <%= delete_user(@user.id) %>
     <% end %>
+    <div class="empty">
+      
+    </div>
+  </div>
+  <% if current_user?(@user.id) %>
+    <div class="user_notification">
+        <p>你有<%= @user.notifications.count %>条通知:</p>
+        <ul>
+        <% @user.notifications.each do |n|%>
+          <% if n.read %>
+            <% pclass = "read"%>
+          <% else %>
+            <% pclass = "unread"%>
+          <% end %>
+            <li><%= delete_notification(n.id) %><p class="<%= pclass %>">你的文章<a href="/notifications/<%= n.id %>"><%= @comments.find(n.comment_id).post.title%></a>,被 <%= @comments.find(n.comment_id).user.name %>回复了</p><div class="empty"></div> 
+            </li>
+        <% end %>
+        </ul>
+    </div>
   <% end %>
+  <div class="user_theme">
+    <p>主题列表:</p>
+    <% @user.posts.each do |p|%>
+      <li>
+      <a href="/topics/<%= p.id %>"><%= p.title %></a>
+      <span>.<%= p.comments.count%>条回复</span>
+      </li>
+    <% end %>
+  </div>
 
+  <div class="user_theme user_comments ">
+    <p>回复列表:</p>
+    <% @user.comments.each do |c| %>
+      <li>
+        <div class="entry"><%= c.body %></div>
+        <span>@</span>
+        <span>.</span>
+        <a href="/topics/<%= c.post.id%>"><%= c.post.title %></a>
+      </li>
+    <% end %>
+    
+  </div>
 </div>

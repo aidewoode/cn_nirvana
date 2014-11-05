@@ -566,3 +566,137 @@ div.login_alert p a {
   color: #f60;
   text-decoration: none;
 }
+
+/* user page style */
+
+
+div.user_info {
+  max-width: 700px;
+  margin: auto;
+  padding-top: 50px;
+}
+
+div.user_header {
+  background-color: #0c6;
+  padding: 6px 6px;
+  color: white;
+}
+
+div.user_header div.avatar {
+  float: left;
+}
+
+div.user_header div.avatar img {
+  display: block;
+  width: 60px;
+}
+
+div.user_header div.username {
+  float: left;
+  font-size: 1.2em;
+  margin-left: 10px;
+
+}
+
+div.user_header div.usernumber {
+  float: right;
+  font-size: 0.8em;
+  color: #eee;
+  margin-right: 6px;
+}
+
+div.user_info div.detail ul li {
+  color: #555;
+
+}
+
+div.user_info div.detail form input{
+  float: right;
+  border: 0px;
+  background-color: #f20;
+  color: white;
+  border-radius: 5px;
+  padding: 3px 9px;
+  font-size: 0.5em;
+}
+
+div.user_notification {
+  margin-top: 55px;
+}
+
+div.user_notification > p {
+  color: #f20;
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+div.user_notification ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+div.user_notification ul li {
+  margin-bottom: 15px;
+  padding: 5px 8px;
+  background-color: #ffc;
+  color: #666;
+}
+
+div.user_notification ul li a{
+  text-decoration: none;
+  color: #f60;
+}
+
+div.user_notification ul li p {
+  margin: 0;
+  word-break: break-word;
+}
+
+div.user_notification ul li p.read {
+  text-decoration: line-through;
+}
+
+div.user_notification  form {
+  float: right;
+}
+
+div.user_notification form input {
+  border: 0;
+  background-color: #f60;
+  color: white;
+  border-radius: 5px;
+}
+
+div.user_theme  {
+  margin: 50px 0;
+  list-style: none;
+}
+
+div.user_theme > p {
+  font-size: 1.1em;
+  color: #f20;
+  font-weight: 700;
+}
+
+div.user_theme li {
+  margin-bottom: 15px;
+  padding: 5px 8px;
+  background-color: #eee;
+  word-break: break-word;
+}
+
+div.user_theme li a {
+  text-decoration: none;
+  color: #066;
+}
+
+div.user_theme li a:hover {
+  text-decoration: underline;
+}
+
+div.user_theme li span {
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9em;
+}
