@@ -1,7 +1,6 @@
 require "sinatra"
 require "sinatra/activerecord"
 require "redcarpet"
-require "qiniu"
 require "./environments"
 
 enable :sessions
@@ -249,8 +248,6 @@ get "/account/:name/edit" do
   is_login
   if (User.find(session[:user_id]) == User.find_by_name(params[:name]))
   @user = User.find(session[:user_id])
-  put_policy = Qiniu::Auth::PutPolicy.new("cnnirvana")
-  @uptoken = Qiniu::Auth.generate_uptoken(put_policy)
   erb :"form/user/edit"
   else
     erb :"pages/404"
@@ -260,7 +257,7 @@ end
 patch "/users" do
   is_login
   @user = User.find(session[:user_id])
-  if @user.update_attributes(params[:user].delete_if{ |key,value| key == "admin"})
+  if @user.update_attributes(params[:user].delete_if{ |key,value| key == "email"or key == "name" or key == "admin"}) 
     redirect "/account/#{@user.name}"
   else
     erb :"form/user/edit" # like render

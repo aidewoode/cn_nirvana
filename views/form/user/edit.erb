@@ -1,22 +1,54 @@
-<form action="/users" method="post">
-  <input type="hidden" name="_method" value="patch" />
+<div class="user_edit">
+  <p>个人资料修改:</p>
+  <div class="user_info_edit">
+    <form action="/users" method="post">
+    <input type="hidden" name="_method" value="patch" />
 
-  <label for="user_name">Name:</label><br/> 
-  <input id="user_name" name="user[name]" type="text" value="<%= @user.name %>" />
-  <br/>
+    <div>
+      <label for="user_fake">名字:</label> 
+      <% if @user.fake %>
+        <% name_value = "#{@user.fake}"%>
+      <% else %>
+        <% name_value = "#{@user.name}"%>
+      <% end %>
+      <input id="user_fake" name="user[fake]" type="text" value="<%= name_value %>" />
+    </div>
 
-  <label for="user_email">Email:</label><br/>
-  <input id="user_email" name="user[email]" type="text" value="<%=@user.email%>"/>
-  <br/>
+    <div>
+      <label for="user_email">Email:</label>
+      <input id="user_email" name="user[email]" disabled="disabled" type="text" value="<%=@user.email%>"/>
+    </div>
 
-  <input type="submit" value="Edit Post" />
+    <div>
+      <label for="user_city">城市:</label>
+      <input type="text" name="user[city]" id="user_city" value="<%= @user.city%>" />
+    </div>
 
-</form>
+    <div>
+      <label for="user_info">个人介绍:</label>
+      <textarea name="user[info]" id="user_info" rows="8" cols="40"><%= @user.info %></textarea>
+    </div>
+    <input type="submit" value="修改资料" />
 
-<form action="http://upload.qiniu.com/" enctype="multipart/form-data" method="post">
-  <input type="hidden" name="key"  value="avatar.<%= @user.id %>" />
-  <input type="hidden" name="token" value="<%= @uptoken %>" />
-  <input type="file" name="file" />
-  <input type="submit"  value="upload" />
+    </form>
+  </div>
 
-</form>
+  <p>密码修改:</p>
+  <div class=" user_info_edit user_password_edit">
+    <form action="/users" method="post">
+      <input type="hidden" name="_method" value="patch" />
+
+      <div>
+        <label for="user_password">新密码:</label>
+        <input type="password" name="user[password]" id="user_password" />
+      </div>
+
+      <div>
+        <label for="user_password_confirmation">确认新密码:</label>
+        <input type="password" name="user[password_confirmation]" id="user_password_confirmation" />
+      </div>
+
+      <input type="submit" value="修改密码" />
+    </form>
+  </div>
+</div>

@@ -4,10 +4,10 @@
       <img src="/picture/logo.png" />
     </div>
     <div class="username">
-      <% if @user.fake_name.nil? %>
+      <% if @user.fake.nil? %>
         <%= @user.name%>
       <% else %>
-        <%= @user.fake_name %>
+        <%= @user.fake %>
       <% end %>
     </div>
     <div class="usernumber">
@@ -22,12 +22,15 @@
   <div class="detail">
     <ul>
       <li>Id: <%= @user.name %></li>
+      <% if !@user.fake.nil? %>
+        <li>名字: <%= @user.fake %></li>
+      <% end %>
       <li>Email: <%= @user.email %></li>
       <% if !@user.city.nil? %>
-        <li>City: <%= @user.city %></li>
+        <li>城市: <%= @user.city %></li>
       <% end %>
       <% if !@user.info.nil? %>
-        <li>Info: <%= @user.info %></li>
+        <li>个人介绍: <%= @user.info %></li>
       <% end %>
     </ul>
     <% if admin?&&!@user.admin?%>

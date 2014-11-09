@@ -700,3 +700,83 @@ div.user_theme li span {
   color: #555;
   font-size: 0.9em;
 }
+
+/* user edit page style */
+
+div.user_edit {
+  max-width: 700px;
+  margin: auto;
+  padding-top: 50px;
+}
+
+div.user_edit > div {
+  margin-bottom: 65px;
+}
+
+div.user_edit > p {
+  color: #f20;
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+div.user_info_edit {
+  color: #666;
+}
+
+div.user_info_edit label {
+  text-align: right;
+  float: left;
+  width: 100px;
+  letter-spacing: 1px;
+}
+
+div.user_info_edit input {
+  margin-left: 20px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 0.9em;
+  width: 372px;
+  outline: none;
+}
+
+div.user_info_edit input[type="submit"] {
+  background-color: #0c6;
+  color: white;
+  padding: 7px;
+  width: 100px;
+  margin-left: 120px;
+  outline: none;
+  border: none;
+}
+
+div.user_info_edit input[type="submit"]:hover {
+  opacity: 0.7;
+}
+
+
+div.user_info_edit input[disabled="disabled"] {
+  background-color: #eee;
+  cursor: not-allowed;
+}
+
+
+div.user_info_edit textarea {
+  margin-left: 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 0.9em;
+  outline: none;
+}
+
+div.user_info_edit div {
+  margin-bottom: 16px;
+}
+
+div.user_info_edit input:focus {
+  border-color: #09c;
+}
+
+div.user_info_edit textarea:focus {
+  border-color: #09c;
+}
