@@ -780,3 +780,68 @@ div.user_info_edit input:focus {
 div.user_info_edit textarea:focus {
   border-color: #09c;
 }
+
+/* signup page style */
+
+div.sign_up {
+  max-width: 700px;
+  margin: auto;
+  padding-top: 50px;
+  text-align: center;
+}
+
+div.sign_up h1 {
+  color: #444;
+  letter-spacing: 1.5px;
+}
+
+div.sign_up form {
+  max-width: 350px;
+  margin: auto;
+  margin-top: 50px;
+  padding: 30px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+div.sign_up div {
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 0.9em;
+}
+
+
+div.sign_up label {
+  float: left;
+  text-align: right;
+  width: 100px;
+  letter-spacing: 1px;
+}
+
+div.sign_up input {
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  padding: 4px;
+  outline: none;
+  width: 180px;
+}
+
+div.sign_up input[type="submit"] {
+  background-color: #0c6;
+  color: white;
+  padding: 7px;
+  width: 100px;
+  outline: none;
+  border: none;
+}
+
+div.sign_up input[type="submit"]:hover {
+  opacity: 0.7;
+}
+
+div.sign_up input:focus {
+  border-color: #09c;
+}
+
+
+

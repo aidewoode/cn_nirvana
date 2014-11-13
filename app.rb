@@ -215,7 +215,7 @@ post "/users" do
 end
 
 get "/login" do
-  erb :"pages/login", :layout => false
+  erb :"form/user/login"
 end 
 
 get "/logout" do

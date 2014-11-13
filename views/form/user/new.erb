@@ -1,19 +1,26 @@
-<form action="/users" method="post">
-  <label for="user_name">Name:</label><br/> 
-  <input id="user_name" name="user[name]" type="text" />
-  <br/>
+<div class="sign_up">
+  <h1>欢迎注册成为CnNirvana 的会员</h1>
+  <form action="/users" method="post">
+    <div>
+      <label for="user_name">用户名:</label> 
+      <input id="user_name" name="user[name]" type="text" />
+    </div>
 
-  <label for="user_email">Email:</label><br/>
-  <input id="user_email" name="user[email]" type="text" />
-  <br />
+    <div>
+      <label for="user_email">Email:</label>
+      <input id="user_email" name="user[email]" type="text" />
+    </div>
 
-  <label for="user_password">Password:</label><br/>
-  <input id="user_password" name="user[password]" type="password" />
-  <br/>
+    <div>
+      <label for="user_password">密码:</label>
+      <input id="user_password" name="user[password]" type="password" />
+    </div>
 
-  <label for="user_password_confirmation">Confirmation:</label><br/>
-  <input id="user_password_confirmation" name="user[password_confirmation]" type="password" />
-  <br/>
+    <div>
+      <label for="user_password_confirmation">确认密码:</label>
+      <input id="user_password_confirmation" name="user[password_confirmation]" type="password" />
+    </div>
 
-  <input type="submit" value="Create User" />
-</form>
+    <input type="submit" value="提交注册" />
+  </form>
+</div>
