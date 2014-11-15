@@ -8,6 +8,9 @@ gem "bcrypt"
 gem "thin"
 gem "redcarpet"
 gem "tux"
+gem "will_paginate"
+gem "carrierwave"
+gem "carrierwave-qiniu"
 
 group :development do
   gem "sqlite3"

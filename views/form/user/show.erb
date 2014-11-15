@@ -1,7 +1,7 @@
 <div class="user_info">
   <div class="user_header">
     <div class="avatar">
-      <img src="/picture/logo.png" />
+      <img src="<%= @user.avatar_url %>" />
     </div>
     <div class="username">
       <% if @user.fake.nil? %>
@@ -33,6 +33,9 @@
         <li>个人介绍: <%= @user.info %></li>
       <% end %>
     </ul>
+    <% if current_user?(@user.id) %>
+      <a href="/account/<%= @user.name%>/edit">修改资料</a>
+    <% end %>
     <% if admin?&&!@user.admin?%>
       <%= delete_user(@user.id) %>
     <% end %>

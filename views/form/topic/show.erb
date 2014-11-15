@@ -7,10 +7,10 @@
     <% titleclass = "topic_title"%>
   <% end %>
   <div class="<%= titleclass %>">
-    <div class="avatar"><img src="/picture/logo.png"></div>
+    <div class="avatar"><img src="<%= @post.user.avatar_url %>"></div>
     <h1><%= @post.title %></h1>
     <div class="topic_info">
-      <a href="/tag/<%= @post.tag %>"><%= @post.tag %></a>
+      <a href="/tags/<%= @post.tag %>"><%= @post.tag %></a>
       <span>.</span>
       <span>由</span>
       <a href="/account/<%= @post.user.name%>"><%= @post.user.name%></a>
@@ -43,7 +43,7 @@
   <% @comments.each do |comment| %>
     <li class="comment">
       <div class="avatar">
-        <img src="/picture/logo.png" alt="avatar" />
+        <img src="<%= comment.user.avatar_url %>" alt="avatar" />
       </div>
       <div class="comment_info">
         <% if login? %>

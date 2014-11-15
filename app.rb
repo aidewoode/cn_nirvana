@@ -1,5 +1,11 @@
 require "sinatra"
 require "sinatra/activerecord"
+require "will_paginate"
+require "will_paginate/active_record"
+require "qiniu"
+require "carrierwave"
+require "carrierwave/orm/activerecord"
+require "carrierwave-qiniu"
 require "redcarpet"
 require "./environments"
 
@@ -81,6 +87,45 @@ helpers do
 
 end
 
+class AvatarUploader < CarrierWave::Uploader::Base
+  storage :qiniu
+  self.qiniu_protocal = "http"
+  self.qiniu_can_overwrite = true
+
+  def store_dir
+    "avatar"
+  end
+
+  def extension_white_list
+    %w(jpg jpeg gif png)
+  end
+
+  def filename
+    "avatar#{model.id}.#{file.extension}" if original_filename.present?
+  end
+
+  def default_url
+    "http://cnnirvana.qiniudn.com/avatar/default.png"
+  end
+end
+
+class PictureUploader < CarrierWave::Uploader::Base
+  storage :qiniu
+  self.qiniu_protocal = "http"
+
+  def store_dir
+    "picture/#{model.id}"
+  end
+
+  def extension_white_list
+    %w(jpg jpeg gif png)
+  end
+
+  def filename
+    "image.#{file.extension}"
+  end
+end
+
 class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 3}
   validates :body, presence: true
@@ -101,6 +146,8 @@ class User < ActiveRecord::Base
   validates :email, presence: true, format: { with: VALID_EMAIL },uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }, on: create
   validates :password_confirmation, presence: true, on: create
+
+  mount_uploader :avatar, AvatarUploader
   
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -127,6 +174,7 @@ end
 
 
 
+
 ## post routes
 
 def is_login
@@ -134,8 +182,8 @@ def is_login
 end
 
 get "/" do
-  @top_posts = Post.where(top: true).order("created_at DESC")
-  @posts = Post.where(top: false).order("last_reply_time DESC").order("created_at DESC")
+  @top_posts = Post.where(top: true).order("last_reply_time DESC")
+  @posts = Post.where(top: false).paginate(page: params[:page], per_page: 5).order("last_reply_time DESC")
   @comments = Comment.all
   erb :"form/index"
 end
@@ -151,11 +199,14 @@ post "/topics" do
   user = User.find(session[:user_id])
   @post = user.posts.build(params[:post])
   if @post.save
+    @post.last_reply_time = @post.created_at
+    @post.save    
     redirect "/topics/#{@post.id}"
   else
     erb :"form/topic/new"
   end
 end
+
 
 get "/topics/:id" do
   if (@post = Post.find_by_id(params[:id]))
@@ -193,7 +244,8 @@ delete "/topics/:id" do
 end
 
 get "/tags/:tag" do
-  @posts = Post.where("tag = ?", params[:tag]).order(created_at: :desc)
+  @posts = Post.where("tag = ?", params[:tag]).order(last_reply_time: :desc)
+  @comments = Comment.all
   erb :"form/tags"
 end
 

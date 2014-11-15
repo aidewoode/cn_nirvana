@@ -14,7 +14,7 @@
         </div>
       <% end %>
         <div class="avatar">
-          <img src="/picture/logo.png" alt="avatar" />
+          <img src="<%= post.user.avatar_url %>" alt="avatar" />
         </div>
         <div class="content">
           <div class="title">
@@ -61,7 +61,7 @@
         </div>
       <% end %>
         <div class="avatar">
-          <img src="/picture/logo.png" alt="avatar" />
+          <img src="<%= post.user.avatar_url %>" alt="avatar" />
         </div>
         <div class="content">
           <div class="title">
@@ -91,4 +91,5 @@
     <% end %>
     
   </ul>
+  <%= will_paginate @posts ,next_label: "下一页" , previous_label: "上一页"%>
 </div>

@@ -1,9 +1,22 @@
 <div class="new_edit_post">
-  <h1>Edit Post</h1>
+  <h1>修改你的帖子</h1>
   <form action="/topics/<%= @post.id %>" method="post">
     <input type="hidden" name="_method" value="put" />
     <%= new_edit_form(@post) %>
-    <input type="submit" value="Edit Post" />
+    <div class="submit">
+      <input type="submit" value="发布修改" />
+    </div>
 
 </form>
 </div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/module.min.js"></script>
+<script type="text/javascript" src="/js/uploader.min.js"></script>
+<script type="text/javascript" src="/js/simditor.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  var editor = new Simditor(
+      {
+        textarea: $('#post_body')
+      }
+      );
+</script>

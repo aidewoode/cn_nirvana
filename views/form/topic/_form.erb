@@ -1,13 +1,15 @@
-<label for="post_title">Title:</label><br/> 
-<input id="post_title" name="post[title]" type="text" value="<%= post.title %>" />
-<br/>
+<div class="header">
+  <select id="post_tag" name="post[tag]" >
+    <option value="闲聊">闲聊</option>
+    <option value="音乐">音乐</option>
+    <option value="电影">电影</option>
+    <option value="资源">资源</option>
+    <option value="足球">足球</option>
+    <option value="反馈">反馈</option>
+  </select>
+  <input id="post_title" name="post[title]" type="text" placeholder="在这里输入标题" value="<%= post.title %>" />
+</div>
 
-<label for="post_tag">Tag:</label><br/>
-<input id="post_tag" name="post[tag]" type="text" value="<%= post.tag%>"/>
-<br/>
-
-
-<label for="post_body">Body:</label><br/>
 <textarea id="post_body" name="post[body]" row="5"><%= post.body %></textarea>
-<br/>
+
 

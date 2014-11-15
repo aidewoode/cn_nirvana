@@ -230,6 +230,20 @@ nav.global_nav div.login a:hover {
   color: #f60;
 }
 
+nav.global_nav div.new_post {
+  float: right;
+  padding: 0 10px;
+  border-left: 1px solid #eee;
+}
+
+nav.global_nav div.new_post a {
+  color: #f60;
+}
+
+nav.global_nav div.new_post a:hover {
+  color: #333;
+}
+
 nav.global_nav div.notification {
   float: right;
   margin-right: 10px;
@@ -270,7 +284,7 @@ nav.global_nav div.account a:hover {
 
 nav.global_nav div.logout {
   float: right;
-  padding-left: 10px;
+  padding-left: 10px ;
   border-left: 1px solid #eee;
 }
 
@@ -318,7 +332,19 @@ div.all_content ul {
   padding: 0;
   list-style: none;
 }
+div.all_content div.result {
+  text-align: center;
+  margin: 40px;
+  background-color: #f60;
+  padding: 1px;
 
+}
+
+div.all_content div.result h1 {
+  font-weight: 400;
+  line-height: 2px;
+  font-size: 1.8em;
+}
 div.all_content ul a {
  text-decoration: none;
 }
@@ -388,6 +414,29 @@ ul.all_topics div.info a {
   color: #555;
   letter-spacing: 1.5px;
   font-weight: 600;
+}
+
+div.pagination {
+  text-align: center;
+  margin-top: 40px;
+  font-weight: 600;
+  color: #555;
+}
+
+.previous_page {
+  margin-right: 25px; 
+}
+.next_page {
+  margin-left: 25px;
+}
+
+div.pagination a {
+  text-decoration: none;
+  color: #0c6;
+}
+
+div.pagination a:hover {
+  text-decoration: underline;
 }
 
 /* topics show page style */
@@ -539,11 +588,13 @@ div.all_content form.comment div.submit {
 
 div.all_content form.comment div.submit input {
   background-color: #0c6;
-  border: 0px;
-  margin-bottom: 10px;
-  padding: 2px 10px;
+  border: none;
+  margin-top: 20px;
+  padding: 7px;
   outline: none;
   color: white;
+  width: 100px;
+  border-radius: 3px;
 }
 
 div.all_content form.comment div.submit input:hover {
@@ -618,6 +669,13 @@ div.user_info div.detail form input{
   border-radius: 5px;
   padding: 3px 9px;
   font-size: 0.5em;
+}
+
+div.user_info div.detail a {
+  float: right;
+  color: #0c6;
+  font-size: 0.9em;
+  margin-right: 10px;
 }
 
 div.user_notification {
@@ -781,6 +839,8 @@ div.user_info_edit textarea:focus {
   border-color: #09c;
 }
 
+/*********************************/
+
 /* signup page style */
 
 div.sign_up {
@@ -844,4 +904,112 @@ div.sign_up input:focus {
 }
 
 
+/***************************************/
+
+/* new edit topic page style */
+
+div.new_edit_post {
+  max-width: 700px;
+  margin: auto;
+  padding-top: 50px;
+}
+
+div.new_edit_post h1 {
+  text-align: center;
+  color: #444;
+  letter-spacing: 1.5px
+}
+
+div.new_edit_post select {
+  width: 200px;
+  margin-right: 35px;
+}
+
+div.new_edit_post div.header {
+  margin: 30px 0;
+}
+
+div.new_edit_post input {
+  font-size: 0.9em;
+  width: 200px;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+div.new_edit_post input:focus {
+  border-color: #09c;
+}
+
+div.new_edit_post div.submit {
+  text-align: center;
+}
+
+div.new_edit_post input[type="submit"] {
+  background-color: #0c6;
+  color: white;
+  padding: 7px;
+  width: 100px;
+  outline: none;
+  border: none;
+  margin-top: 20px;
+}
+
+div.new_edit_post input[type="submit"]:hover {
+  opacity: 0.7;
+}
+
+/************************************/
+/* about page style */
+
+div.about_page {
+  max-width: 700px;
+  margin: auto;
+  padding-top: 50px;
+}
+
+div.about_page h1 {
+  text-align: center;
+  color: #333;
+}
+
+/* 404 page style */
+body.page404 {
+  background-image: url(/picture/background.png)
+}
+
+div.page404 {
+  position: relative;
+  min-height: 600px;
+  width: auto;
+}
+
+div.page404 h1 {
+  margin-top: 320px;
+  text-align: center;
+  font-size: 6em;
+  letter-spacing: 7px;
+  margin-bottom: 0;
+}
+div.page404 div.button {
+  text-align: center;
+  margin-top: 65px;
+}
+
+div.page404 a {
+  text-decoration: none;
+  padding: 7px;
+  width: 100px;
+  border-radius: 3px;
+  background-color: #0c6;
+  color: white;
+  outline: none;
+  border: none;
+  margin-top: 20px;
+}
+
+div.page404 a:hover {
+  opacity: 0.7;
+}
 

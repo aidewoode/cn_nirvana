@@ -1,7 +1,7 @@
 <div class="user_edit">
   <p>个人资料修改:</p>
   <div class="user_info_edit">
-    <form action="/users" method="post">
+    <form action="/users" method="post" enctype="multipart/form-data"> 
     <input type="hidden" name="_method" value="patch" />
 
     <div>
@@ -12,6 +12,10 @@
         <% name_value = "#{@user.name}"%>
       <% end %>
       <input id="user_fake" name="user[fake]" type="text" value="<%= name_value %>" />
+    </div>
+    <div>
+      <label for="user_avatar">头像:</label>
+      <input type="file" name="user[avatar]" id="user_avatar" />
     </div>
 
     <div>
