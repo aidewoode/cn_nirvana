@@ -5,8 +5,8 @@
   <title>涅磐中文</title>
   <meta name="description" content="涅磐中文家庭论坛">
   <meta name="keywords" content="Nirvana,Grunge music,Kurt Cobain,Rock music">
-  <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/entry.css" />
+  <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/font-awesome.css" />
   <link rel="stylesheet" href="/css/simditor.css"/>
 </head>
@@ -52,6 +52,15 @@
     </nav>
   </header>
   <section class="index">
+  <% if flash[:success]%>
+    <div class="flash flash_success">
+      <%= flash[:success]%>
+    </div>
+  <% elsif flash[:notice]%>
+    <div class="flash flash_notice">
+      <%= flash[:notice]%>
+    </div>
+  <% end %>
     <%= yield %>
   </section>
   <footer class="index">

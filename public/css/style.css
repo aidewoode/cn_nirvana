@@ -196,6 +196,7 @@ nav.global_nav div a {
   text-decoration: none;
   vertical-align: baseline;
   letter-spacing: 2px;
+  color: #333;
 }
 
 nav.global_nav div.signup { 
@@ -275,7 +276,6 @@ nav.global_nav div.notification a:hover {
 nav.global_nav div.account {
   margin-right: 10px;
   font-size: 1.1em;
-  color: #333;
 }
 
 nav.global_nav div.account a:hover {
@@ -495,20 +495,17 @@ div.topic_body {
 div.topic_option input {
   float: right;
   margin-right: 30px;
-  background: #f20;
-  border: 1px solid;
-  border-radius: 5px;
-  color: white;
+  background: none;
+  border: none;
+  color: #f20;
   outline: none;
+  text-decoration: underline;
+  padding-top: 3px;
 }
 
 div.topic_option a {
   float: right;
-  background-color: #0c6;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  padding: 0 4px;
+  color: #0c6;
   margin-right: 30px;
 }
 
@@ -552,12 +549,14 @@ li.comment div.comment_info a {
 li.comment div.comment_info a.reply {
   float: right;
   color: #0c6;
-  padding: 0px 9px;
-  font-size: 0.1em;
 }
 
 li.comment div.comment_content div {
   max-width: 550px;
+}
+
+li.comment div.comment_content div.entry p:first-child  b:first-child  {
+  color: red;
 }
 
 li.comment div.comment_content form {
@@ -565,13 +564,12 @@ li.comment div.comment_content form {
 }
 
 li.comment div.comment_content input {
-  border-radius: 5px;
-  background-color: #f20;
-  border: 0px;
-  color: white;
-  font-size: 0.5em;
+  background: none;
+  border: none;
+  color: #f20;
+  font-size: 0.9em;
   font-weight: 600;
-  padding: 3px 9px;
+  padding: 0;
 }
 
 div.all_content form.comment {
@@ -584,6 +582,7 @@ div.all_content form.comment label {
 
 div.all_content form.comment div.submit {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 div.all_content form.comment div.submit input {
@@ -663,12 +662,13 @@ div.user_info div.detail ul li {
 
 div.user_info div.detail form input{
   float: right;
-  border: 0px;
-  background-color: #f20;
-  color: white;
-  border-radius: 5px;
+  border: none;
+  background: none;
+  color: #f20;
   padding: 3px 9px;
-  font-size: 0.5em;
+  font-size: 0.9em;
+  text-decoration: underline;
+  outline: none;
 }
 
 div.user_info div.detail a {
@@ -862,11 +862,11 @@ div.sign_up form {
   padding: 30px 0;
   border: 1px solid #ccc;
   border-radius: 10px;
+  color: #666;
 }
 
 div.sign_up div {
   margin-bottom: 20px;
-  color: #666;
   font-size: 0.9em;
 }
 
@@ -1012,4 +1012,30 @@ div.page404 a {
 div.page404 a:hover {
   opacity: 0.7;
 }
+/****************************/
 
+/* flash style */
+
+div.flash {
+  text-align: center;
+  width: 300px;
+  margin: auto;
+  color: white;
+  letter-spacing: 3px;
+  font-size: 0.9em;
+}
+
+div.flash_error {
+  background-color: #f20;
+  margin-bottom: 20px;
+}
+
+div.flash_success {
+  background-color: #0c6; 
+  margin-top: 100px;
+}
+
+div.flash_notice {
+  background-color: #f60;
+  margin-top: 100px;
+}

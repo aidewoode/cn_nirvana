@@ -40,6 +40,8 @@ GEM
       rest-client (~> 1.6)
       ruby-hmac (~> 0.4)
     rack (1.5.2)
+    rack-flash3 (1.0.5)
+      rack
     rack-protection (1.5.3)
       rack
     rack-test (0.6.2)
@@ -91,6 +93,7 @@ DEPENDENCIES
   carrierwave
   carrierwave-qiniu
   pg
+  rack-flash3
   redcarpet
   shotgun
   sinatra

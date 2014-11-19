@@ -1,4 +1,12 @@
 <div class="new_edit_post">
+  <% if flash[:error]%>
+    <div class="flash flash_error">
+      <%= flash[:error]%>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg%></li>
+      <% end %>
+    </div>
+  <% end %>
   <h1>修改你的帖子</h1>
   <form action="/topics/<%= @post.id %>" method="post">
     <input type="hidden" name="_method" value="put" />

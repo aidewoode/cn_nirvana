@@ -6,12 +6,15 @@ require "qiniu"
 require "carrierwave"
 require "carrierwave/orm/activerecord"
 require "carrierwave-qiniu"
+require "rack-flash"
 require "redcarpet"
 require "./environments"
 
 enable :sessions
 
 set :session_secret, "super secret"
+
+use Rack::Flash
 
 helpers do
 
@@ -38,6 +41,13 @@ helpers do
 
   def login? 
     !session[:user_id].nil?
+  end
+
+  def is_login
+    unless login? 
+      flash[:notice] = "请先登录"
+      redirect '/login'
+    end
   end
 
   def delete_user(user_id)
@@ -109,23 +119,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 end
 
-class PictureUploader < CarrierWave::Uploader::Base
-  storage :qiniu
-  self.qiniu_protocal = "http"
-
-  def store_dir
-    "picture/#{model.id}"
-  end
-
-  def extension_white_list
-    %w(jpg jpeg gif png)
-  end
-
-  def filename
-    "image.#{file.extension}"
-  end
-end
-
 class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 3}
   validates :body, presence: true
@@ -177,9 +170,6 @@ end
 
 ## post routes
 
-def is_login
-  redirect '/login' unless login?
-end
 
 get "/" do
   @top_posts = Post.where(top: true).order("last_reply_time DESC")
@@ -201,8 +191,10 @@ post "/topics" do
   if @post.save
     @post.last_reply_time = @post.created_at
     @post.save    
+    flash[:success] = "发表成功"
     redirect "/topics/#{@post.id}"
   else
+    flash.now[:error] = "出现错误"
     erb :"form/topic/new"
   end
 end
@@ -210,7 +202,7 @@ end
 
 get "/topics/:id" do
   if (@post = Post.find_by_id(params[:id]))
-    @comments = @post.comments.order("created_at DESC")
+    @comments = @post.comments.paginate(page: params[:page], per_page: 5)
     erb :"form/topic/show"
   else
     erb :"pages/404"
@@ -225,10 +217,12 @@ end
 
 put "/topics/:id" do
   is_login
-  post = User.find(session[:user_id]).posts.find(params[:id])
-  if post.update_attributes(params[:post].delete_if {|key, value| key == "user_id"})
-    redirect "/topics/#{post.id}"
+  @post = User.find(session[:user_id]).posts.find(params[:id])
+  if @post.update_attributes(params[:post].delete_if {|key, value| key == "user_id"})
+    flash[:success] = "修改成功"
+    redirect "/topics/#{@post.id}"
   else
+    flash[:error] = "修改失败"
     erb :"form/topic/edit"
   end
 end
@@ -253,36 +247,43 @@ end
 
 
 get "/signup" do
+  @user = User.new
   erb :"form/user/new"
 end
 
-post "/users" do
-  user = User.new(params[:user].delete_if { |key,value| key == "admin" })
-  if user.save
+post "/signup" do
+  @user = User.new(params[:user].delete_if { |key,value| key == "admin" })
+  if @user.save
+    flash[:success] = "注册成功"
     redirect '/'
   else
-    redirect 'form/user/new'
+    flash.now[:error] = "注册失败"
+    erb :"form/user/new"
   end
 
 end
 
 get "/login" do
+  @user = User.new
   erb :"form/user/login"
 end 
 
 get "/logout" do
   is_login
   session.clear
+  flash[:success] = "登出成功"
   redirect '/'
 end
 
-post "/sessions" do
+post "/login" do
   @user = User.find_by_email(params[:session][:email])
   if @user && @user.authenticate(params[:session][:password])
     session[:user_id] = @user.id
-    redirect "/account/#{@user.name}"
+    flash[:success] = "登录成功"
+    redirect "/"
   else
-    redirect '/login'
+    flash.now[:notice] = "登录失败,密码或Email 错误"
+    erb :"form/user/login"
   end
 end
 
@@ -302,7 +303,8 @@ get "/account/:name/edit" do
   @user = User.find(session[:user_id])
   erb :"form/user/edit"
   else
-    erb :"pages/404"
+    flash[:notice] = "禁止访问，你的权限不够"
+    redirect "/"
   end
 end
 
@@ -312,7 +314,7 @@ patch "/users" do
   if @user.update_attributes(params[:user].delete_if{ |key,value| key == "email"or key == "name" or key == "admin"}) 
     redirect "/account/#{@user.name}"
   else
-    erb :"form/user/edit" # like render
+    erb :"form/user/edit" 
   end
 end
 
@@ -321,7 +323,8 @@ delete "/users/:id" do
   if User.find(session[:user_id]).admin?
     User.find(params[:id]).destroy
   else
-    erb :"pages/404"
+    flash[:notice] = "禁止访问，你的权限不够"
+    redirect "/"
   end
 end
 
@@ -339,9 +342,11 @@ post "/comments/:id" do # need to change
     if ( comment.user != Post.find(params[:id]).user )
       Notification.create(user_id: Post.find(params[:id]).user.id, comment_id: comment.id )
     end
+    flash[:success] = "回复成功"
     redirect "/topics/#{params[:id]}"
   else
-    redirect "/"
+    flash[:error] = "回复失败,回复不能为空"
+    redirect "/topics/#{params[:id]}"
   end
 end
 
@@ -352,7 +357,8 @@ delete "/comments/:id" do
     Comment.find(params[:id]).destroy
     redirect "/topics/#{post.id}"
   else
-    erb :"pages/404"
+    flash[:notice] = "禁止访问，你的权限不够"
+    redirect "/"
   end
 end
 
@@ -366,7 +372,8 @@ get "/notifications/:id" do
     noti.save
     redirect "/topics/#{Comment.find(noti.comment_id).post.id}"
   else
-    erb :"pages/404"
+    flash[:notice] = "禁止访问，你的权限不够"
+    redirect "/"
   end
 end
 
@@ -376,7 +383,8 @@ delete "/notifications/:id" do
     Notification.find(params[:id]).destroy
     redirect "/account/#{User.find(session[:user_id]).name}"
   else
-    erb :"pages/404"
+    flash[:notice] = "禁止访问，你的权限不够"
+    redirect "/"
   end
 end
 

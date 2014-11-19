@@ -14,10 +14,20 @@ function activeLink() {
   } 
 
 }
-activeLink();
+
+function getElementByClass(classname) {
+  var element = document.getElementsByTagName("*");
+  var s;
+  for(var i= 0; i<element.length; i++){
+    if(element[i].className == classname) {
+        s = element[i];
+        return s;
+    }
+  }
+}
 
 function replyOne(username) {
-  var content = "@"+username+" ";
-  var input = document.getElementById("comment_body");
-  input.value = content;
+  var content = "<p><b class='atwho'>@"+username+"</b></p></br>" ;
+  var input = getElementByClass("simditor-body");
+  input.innerHTML = content;
 }
