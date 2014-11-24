@@ -31,7 +31,7 @@
               <span><%= time_ago(post.created_at)%></span>
             <% else %>
               <span>最后由</span>
-              <% comment = @comments.find(post.last_reply)%>
+              <% comment = post.comments.find(post.last_reply)%>
               <% user_name = comment.user.name %>
               <a href="/account/<%= user_name %>"><%= user_name %></a>
               <span>回复</span>
@@ -78,7 +78,7 @@
               <span><%= time_ago(post.created_at)%></span>
             <% else %>
               <span>最后由</span>
-              <% comment = @comments.find(post.last_reply)%>
+              <% comment = post.comments.find(post.last_reply)%>
               <% user_name = comment.user.name %>
               <a href="/account/<%= user_name %>"><%= user_name %></a>
               <span>回复</span>

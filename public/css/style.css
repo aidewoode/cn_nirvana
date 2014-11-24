@@ -314,7 +314,10 @@ footer.index {
 
 footer.index p {
   margin: 5px 0;
-  color: #aaa
+  color: #aaa;
+  font-size: 0.9em;
+  font-style: italic;
+  letter-spacing: 1px;
 }
 
 /*************************************/

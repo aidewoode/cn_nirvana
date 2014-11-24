@@ -7,7 +7,6 @@ require "carrierwave"
 require "carrierwave/orm/activerecord"
 require "carrierwave-qiniu"
 require "rack-flash"
-require "redcarpet"
 require "./environments"
 
 enable :sessions
@@ -23,16 +22,8 @@ helpers do
     time.strftime("%Y/%m/%d")
   end
 
-  def post_show_pages? 
-    request.path_info =~ /\/posts\/\d+$/
-  end
-
   def delete_post(post_id)
     erb :"form/topic/_delete_post", locals: { post_id: post_id}
-  end
-
-  def post_each(posts)
-    erb :"form/_post_each", locals: { posts: posts}
   end
 
   def new_edit_form(post)
@@ -60,11 +51,6 @@ helpers do
 
   def delete_notification(notification_id)
     erb :"form/user/_delete_notification", locals: { notification_id: notification_id}
-  end
-
-  def mark_down(post)
-   markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, quote: true) 
-   markdown.render(post)
   end
 
   def admin?
@@ -174,7 +160,6 @@ end
 get "/" do
   @top_posts = Post.where(top: true).order("last_reply_time DESC")
   @posts = Post.where(top: false).paginate(page: params[:page], per_page: 5).order("last_reply_time DESC")
-  @comments = Comment.all
   erb :"form/index"
 end
 
