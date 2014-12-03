@@ -7,6 +7,8 @@ require "carrierwave"
 require "carrierwave/orm/activerecord"
 require "carrierwave-qiniu"
 require "rack-flash"
+require "i18n"
+require "i18n/backend/fallbacks"
 require "./environments"
 
 enable :sessions
@@ -22,8 +24,16 @@ helpers do
     time.strftime("%Y/%m/%d")
   end
 
-  def delete_post(post_id)
-    erb :"form/topic/_delete_post", locals: { post_id: post_id}
+  def post_list(post)
+    erb :"form/_post_list", locals: { post: post}
+  end
+
+  def new_edit_js
+    erb :"form/topic/_new_edit_js"
+  end
+
+  def delete_some(route)
+    erb :"form/_delete_some", locals: { route: route }
   end
 
   def new_edit_form(post)
@@ -36,21 +46,9 @@ helpers do
 
   def is_login
     unless login? 
-      flash[:notice] = "请先登录"
+      flash[:notice] = t(:login_notice) 
       redirect '/login'
     end
-  end
-
-  def delete_user(user_id)
-    erb :"form/user/_delete_user", locals: { user_id: user_id }
-  end
-
-  def delete_comment(comment_id)
-    erb :"form/topic/_delete_comment", locals: { comment_id: comment_id}
-  end
-
-  def delete_notification(notification_id)
-    erb :"form/user/_delete_notification", locals: { notification_id: notification_id}
   end
 
   def admin?
@@ -63,6 +61,10 @@ helpers do
 
   def current_user 
     @user = User.find(session[:user_id])
+  end
+
+  def t(text)
+    I18n.t(text)
   end
 
   def time_ago(start_time)
@@ -123,8 +125,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 50 }, uniqueness: { case_sensitive: false }
   VALID_EMAIL = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with: VALID_EMAIL },uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 6 }, on: create
-  validates :password_confirmation, presence: true, on: create
+  validates :password, presence: true, length: { minimum: 6 }, on: :create
+  validates :password_confirmation, presence: true, on: :create
 
   mount_uploader :avatar, AvatarUploader
   
@@ -139,6 +141,7 @@ class Comment < ActiveRecord::Base
   validates :body, presence: true
   validates :user_id, presence: true
   validates :post_id, presence: true
+  has_many :notifications, dependent: :destroy
 
   belongs_to :post
   belongs_to :user
@@ -148,6 +151,7 @@ class Notification < ActiveRecord::Base
   validates :user_id, presence: true
   validates :comment_id, presence: true
   belongs_to :user
+  belongs_to :comment
 end
 
 
@@ -159,7 +163,7 @@ end
 
 get "/" do
   @top_posts = Post.where(top: true).order("last_reply_time DESC")
-  @posts = Post.where(top: false).paginate(page: params[:page], per_page: 5).order("last_reply_time DESC")
+  @posts = Post.where(top: false).paginate(page: params[:page], per_page: 10).order("last_reply_time DESC")
   erb :"form/index"
 end
 
@@ -176,10 +180,10 @@ post "/topics" do
   if @post.save
     @post.last_reply_time = @post.created_at
     @post.save    
-    flash[:success] = "发表成功"
+    flash[:success] = t(:post_success) 
     redirect "/topics/#{@post.id}"
   else
-    flash.now[:error] = "出现错误"
+    flash.now[:error] = t(:post_error)
     erb :"form/topic/new"
   end
 end
@@ -187,7 +191,7 @@ end
 
 get "/topics/:id" do
   if (@post = Post.find_by_id(params[:id]))
-    @comments = @post.comments.paginate(page: params[:page], per_page: 5)
+    @comments = @post.comments.paginate(page: params[:page], per_page: 10)
     erb :"form/topic/show"
   else
     erb :"pages/404"
@@ -200,14 +204,14 @@ get "/topics/:id/edit" do
   erb :"form/topic/edit"
 end
 
-put "/topics/:id" do
+patch "/topics/:id" do
   is_login
   @post = User.find(session[:user_id]).posts.find(params[:id])
   if @post.update_attributes(params[:post].delete_if {|key, value| key == "user_id"})
-    flash[:success] = "修改成功"
+    flash[:success] = t(:post_modify_success) 
     redirect "/topics/#{@post.id}"
   else
-    flash[:error] = "修改失败"
+    flash[:error] = t(:post_modify_error)
     erb :"form/topic/edit"
   end
 end
@@ -217,7 +221,9 @@ delete "/topics/:id" do
   is_login
   if User.find(session[:user_id]).admin?
     @post = Post.find(params[:id]).destroy
+    redirect "/"
   else
+    flash[:notice] = t(:permission_notice)
     redirect "/"
   end
 end
@@ -239,10 +245,11 @@ end
 post "/signup" do
   @user = User.new(params[:user].delete_if { |key,value| key == "admin" })
   if @user.save
-    flash[:success] = "注册成功"
+    session[:user_id] = @user.id
+    flash[:success] = t(:user_success)
     redirect '/'
   else
-    flash.now[:error] = "注册失败"
+    flash.now[:error] = t(:user_error)
     erb :"form/user/new"
   end
 
@@ -256,7 +263,7 @@ end
 get "/logout" do
   is_login
   session.clear
-  flash[:success] = "登出成功"
+  flash[:success] = t(:user_logout)
   redirect '/'
 end
 
@@ -264,10 +271,10 @@ post "/login" do
   @user = User.find_by_email(params[:session][:email])
   if @user && @user.authenticate(params[:session][:password])
     session[:user_id] = @user.id
-    flash[:success] = "登录成功"
+    flash[:success] = t(:user_login_success)
     redirect "/"
   else
-    flash.now[:notice] = "登录失败,密码或Email 错误"
+    flash.now[:notice] = t(:user_login_error)
     erb :"form/user/login"
   end
 end
@@ -275,10 +282,11 @@ end
 get "/account/:name" do
   is_login
   if (@user = User.find_by_name(params[:name]))
-    @comments = Comment.all
+    @posts = @user.posts.paginate(page: params[:page], per_page: 5)
+    @comments = @user.comments.paginate(page: params[:page], per_page: 5)
     erb :"form/user/show"
   else
-    erb :"pages/404"
+    erb :"pages/404", layout: false 
   end
 end
 
@@ -288,7 +296,7 @@ get "/account/:name/edit" do
   @user = User.find(session[:user_id])
   erb :"form/user/edit"
   else
-    flash[:notice] = "禁止访问，你的权限不够"
+    flash[:notice] = t(:permission_notice)
     redirect "/"
   end
 end
@@ -307,8 +315,9 @@ delete "/users/:id" do
   is_login
   if User.find(session[:user_id]).admin?
     User.find(params[:id]).destroy
+    redirect "/"
   else
-    flash[:notice] = "禁止访问，你的权限不够"
+    flash[:notice] = t(:permission_notice)
     redirect "/"
   end
 end
@@ -321,16 +330,15 @@ post "/comments/:id" do # need to change
   comment.post_id = params[:id]
   if comment.save
       post = Post.find(params[:id])
-      post.last_reply = comment.id
       post.last_reply_time = comment.created_at
       post.save
     if ( comment.user != Post.find(params[:id]).user )
       Notification.create(user_id: Post.find(params[:id]).user.id, comment_id: comment.id )
     end
-    flash[:success] = "回复成功"
+    flash[:success] = t(:comment_success)
     redirect "/topics/#{params[:id]}"
   else
-    flash[:error] = "回复失败,回复不能为空"
+    flash[:error] = t(:comment_error)
     redirect "/topics/#{params[:id]}"
   end
 end
@@ -342,7 +350,7 @@ delete "/comments/:id" do
     Comment.find(params[:id]).destroy
     redirect "/topics/#{post.id}"
   else
-    flash[:notice] = "禁止访问，你的权限不够"
+    flash[:notice] = t(:permission_notice)
     redirect "/"
   end
 end
@@ -357,7 +365,7 @@ get "/notifications/:id" do
     noti.save
     redirect "/topics/#{Comment.find(noti.comment_id).post.id}"
   else
-    flash[:notice] = "禁止访问，你的权限不够"
+    flash[:notice] = t(:permission_notice)
     redirect "/"
   end
 end
@@ -368,7 +376,7 @@ delete "/notifications/:id" do
     Notification.find(params[:id]).destroy
     redirect "/account/#{User.find(session[:user_id]).name}"
   else
-    flash[:notice] = "禁止访问，你的权限不够"
+    flash[:notice] = t(:permission_notice)
     redirect "/"
   end
 end
@@ -380,5 +388,5 @@ get "/about" do
 end
 
 not_found do
-  erb :"pages/404", :layout => false
+  erb :"pages/404", layout: false
 end

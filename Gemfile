@@ -11,6 +11,7 @@ gem "will_paginate"
 gem "carrierwave"
 gem "carrierwave-qiniu"
 gem "rack-flash3"
+gem "i18n"
 
 group :development do
   gem "sqlite3"

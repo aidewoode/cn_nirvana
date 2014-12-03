@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109061954) do
+ActiveRecord::Schema.define(version: 20141202080726) do
 
   create_table "comments", force: true do |t|
     t.text     "body"
@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(version: 20141109061954) do
     t.integer  "user_id"
     t.boolean  "essence",         default: false
     t.boolean  "top",             default: false
-    t.integer  "last_reply"
     t.datetime "last_reply_time"
   end
 

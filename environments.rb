@@ -1,20 +1,19 @@
 CarrierWave.configure do |config|
-  config.storage = :qiniu
-  config.qiniu_access_key = "S-i191j3raW9PbGfbmxq70zUP5OlATEiIIr8Mkp3"
-  config.qiniu_secret_key = "tWrBex4x1tOaVbIp53YGAoz9351xcILlcoMXbwtL"
+  config.qiniu_access_key = ENV['QINIU_ACCESS_KEY']
+  config.qiniu_secret_key = ENV['QINIU_SECRET_KEY']
   config.qiniu_bucket = "cnnirvana"
   config.qiniu_bucket_domain = "cnnirvana.qiniudn.com"
 end
 
+configure do
+  I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
+  I18n.load_path = Dir[File.join(settings.root, 'locales', '*yml')]
+  I18n.backend.load_translations
+  I18n.default_locale = :zh
+end
+
 configure :development do
   set :database , "sqlite3:blog.db"
-  CarrierWave.configure do |config|
-    config.storage = :qiniu
-    config.qiniu_access_key = "S-i191j3raW9PbGfbmxq70zUP5OlATEiIIr8Mkp3"
-    config.qiniu_secret_key = "tWrBex4x1tOaVbIp53YGAoz9351xcILlcoMXbwtL"
-    config.qiniu_bucket = "cnnirvana"
-    config.qiniu_bucket_domain = "cnnirvana.qiniudn.com"
-  end
 end
 
 configure :production do

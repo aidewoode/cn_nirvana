@@ -37,7 +37,7 @@
       <a href="/account/<%= @user.name%>/edit">修改资料</a>
     <% end %>
     <% if admin?&&!@user.admin?%>
-      <%= delete_user(@user.id) %>
+      <%= delete_some("/users/#{@user.id}") %>
     <% end %>
     <div class="empty">
       
@@ -53,7 +53,7 @@
           <% else %>
             <% pclass = "unread"%>
           <% end %>
-            <li><%= delete_notification(n.id) %><p class="<%= pclass %>">你的文章<a href="/notifications/<%= n.id %>"><%= @comments.find(n.comment_id).post.title%></a>,被 <%= @comments.find(n.comment_id).user.name %>回复了</p><div class="empty"></div> 
+          <li><%= delete_some("/notifications/#{n.id}") %><p class="<%= pclass %>">你的文章<a href="/notifications/<%= n.id %>"><%= @comments.find(n.comment_id).post.title%></a>,被 <%= @comments.find(n.comment_id).user.name %>回复了</p><div class="empty"></div> 
             </li>
         <% end %>
         </ul>
@@ -61,17 +61,18 @@
   <% end %>
   <div class="user_theme">
     <p>主题列表:</p>
-    <% @user.posts.each do |p|%>
+    <% @posts.each do |p|%>
       <li>
       <a href="/topics/<%= p.id %>"><%= p.title %></a>
       <span>.<%= p.comments.count%>条回复</span>
       </li>
     <% end %>
+    <%= will_paginate @posts, next_label: "下一页" , previous_label: "上一页" %>
   </div>
 
   <div class="user_theme user_comments ">
     <p>回复列表:</p>
-    <% @user.comments.each do |c| %>
+    <% @comments.each do |c| %>
       <li>
         <div class="entry"><%= c.body %></div>
         <span>@</span>
@@ -79,6 +80,7 @@
         <a href="/topics/<%= c.post.id%>"><%= c.post.title %></a>
       </li>
     <% end %>
+    <%= will_paginate @comments, next_label: "下一页" , previous_label: "上一页"%>
     
   </div>
 </div>

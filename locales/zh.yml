@@ -1,0 +1,49 @@
+zh:
+  post_success: "发表成功"
+  post_error: "出现错误"
+  post_modify_success: "修改成功"
+  post_modify_error: "修改失败"
+  user_success: "注册成功"
+  user_error: "注册失败"
+  user_logout: "登出成功"
+  user_login_success: "登录成功"
+  user_login_error: "登录失败，密码或Email 错误"
+  comment_success: "回复成功"
+  comment_error: "回复失败，回复不能为空"
+  login_notice: "请先登录"
+  permission_notice: "禁止访问，你的权限不够"
+  delete: "删除"
+  activerecord:
+    attributes:
+      user:
+        name: "用户名"
+        password: "密码"
+        password_confirmation: "密码确认"
+      post:
+        title: "标题"
+        body: "内容"
+    errors:
+      models:
+        post:
+          attributes:
+            title:
+              blank: "不能为空"
+              too_short: "太短，至少三个字符"
+            body:
+              blank: "不能为空"
+        user:
+          attributes:
+            name: 
+              blank: "不能为空"
+              taken: "已被使用，请换一个"
+            email:
+              blank: "不能为空"
+              taken: "已被使用，请换一个"
+              invalid: "格式不正确"
+              
+            password:
+              blank: "不能为空"
+              too_short: "太短，至少六位"
+            password_confirmation:
+              blank: "不能为空"
+              confirmation: "不匹配"

@@ -35,7 +35,7 @@
       <a href="/topics/<%= @post.id %>/edit">修改</a>
     <% end %>
     <% if login?&&admin? %>
-      <%= delete_post(@post.id)%>
+      <%= delete_some("/topics/#{@post.id}")%>
     <% end %>
     <div class="empty">
     </div>
@@ -61,7 +61,7 @@
       </div>
       <div class="comment_content">
         <% if login?&&admin?%>
-          <%= delete_comment(comment.id)%>
+          <%= delete_some("/comments/#{comment.id}")%>
         <% end %>
         <div class="entry"><%= comment.body %></div>
       </div>

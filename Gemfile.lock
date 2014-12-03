@@ -91,6 +91,7 @@ DEPENDENCIES
   bcrypt
   carrierwave
   carrierwave-qiniu
+  i18n
   pg
   rack-flash3
   shotgun

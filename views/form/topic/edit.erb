@@ -9,7 +9,7 @@
   <% end %>
   <h1>修改你的帖子</h1>
   <form action="/topics/<%= @post.id %>" method="post">
-    <input type="hidden" name="_method" value="put" />
+    <input type="hidden" name="_method" value="patch" />
     <%= new_edit_form(@post) %>
     <div class="submit">
       <input type="submit" value="发布修改" />
@@ -17,14 +17,4 @@
 
 </form>
 </div>
-<script type="text/javascript" src="/js/jquery.min.js"></script>
-<script type="text/javascript" src="/js/module.min.js"></script>
-<script type="text/javascript" src="/js/uploader.min.js"></script>
-<script type="text/javascript" src="/js/simditor.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-  var editor = new Simditor(
-      {
-        textarea: $('#post_body')
-      }
-      );
-</script>
+<%= new_edit_js %>
