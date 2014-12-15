@@ -15,14 +15,14 @@
   </div>
   <div class="content">
     <div class="title">
-      <a href="/topics/<%= post.id %>"><%= post.title %></a>
+      <a href="/topics/<%= post.id %>"><%= h(post.title) %></a>
     </div>
     <div class="info">
-      <a href="/tags/<%= post.tag %>"><%= post.tag %></a>
+      <a href="/tags/<%= post.tag %>"><%= h(post.tag) %></a>
       <span> . </span>
       <% if (count == 0) %>
         <span>由</span>
-        <a href="/account/<%= post.user.name %>"><%= post.user.name %></a>
+        <a href="/account/<%= post.user.name %>"><%= h(post.user.name) %></a>
         <span>发表</span>
         <span>.</span>
         <span><%= time_ago(post.created_at)%></span>
@@ -30,7 +30,7 @@
         <span>最后由</span>
         <% comment = post.comments.last%>
         <% user_name = comment.user.name %>
-        <a href="/account/<%= user_name %>"><%= user_name %></a>
+        <a href="/account/<%= user_name %>"><%= h(user_name) %></a>
         <span>回复</span>
         <span>.</span>
         <span><%= time_ago(comment.created_at)%></span>

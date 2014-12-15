@@ -13,12 +13,12 @@
   <% end %>
   <div class="<%= titleclass %>">
     <div class="avatar"><img src="<%= @post.user.avatar_url %>"></div>
-    <h1><%= @post.title %></h1>
+    <h1><%= h(@post.title) %></h1>
     <div class="topic_info">
-      <a href="/tags/<%= @post.tag %>"><%= @post.tag %></a>
+      <a href="/tags/<%= @post.tag %>"><%= h(@post.tag) %></a>
       <span>.</span>
       <span>由</span>
-      <a href="/account/<%= @post.user.name%>"><%= @post.user.name%></a>
+      <a href="/account/<%= @post.user.name%>"><%= h(@post.user.name) %></a>
       <span>发表</span>
       <span>.</span>
       <span><%= time_ago(@post.created_at) %></span>
@@ -54,7 +54,7 @@
         <% if login? %>
           <a data-scroll href="#comment_tag" class="reply" onclick="replyOne('<%= comment.user.name %>')">回复</a>
         <% end %>
-        <a href="/account/<%= comment.user.name %>"><%= comment.user.name %></a>
+        <a href="/account/<%= comment.user.name %>"><%= h(comment.user.name) %></a>
         <span> </span>
         <span>.</span>
         <span><%= time_ago(comment.created_at)%></span>

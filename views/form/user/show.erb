@@ -5,9 +5,9 @@
     </div>
     <div class="username">
       <% if @user.fake.nil? %>
-        <%= @user.name%>
+        <%= h(@user.name)%>
       <% else %>
-        <%= @user.fake %>
+        <%= h(@user.fake) %>
       <% end %>
     </div>
     <div class="usernumber">
@@ -21,16 +21,16 @@
   </div>
   <div class="detail">
     <ul>
-      <li>Id: <%= @user.name %></li>
+      <li>Id: <%= h(@user.name) %></li>
       <% if !@user.fake.nil? %>
-        <li>名字: <%= @user.fake %></li>
+        <li>名字: <%= h(@user.fake) %></li>
       <% end %>
-      <li>Email: <%= @user.email %></li>
+      <li>Email: <%= h(@user.email) %></li>
       <% if !@user.city.nil? %>
-        <li>城市: <%= @user.city %></li>
+        <li>城市: <%= h(@user.city) %></li>
       <% end %>
       <% if !@user.info.nil? %>
-        <li>个人介绍: <%= @user.info %></li>
+        <li>个人介绍: <%= h(@user.info) %></li>
       <% end %>
     </ul>
     <% if current_user?(@user.id) %>
@@ -53,7 +53,7 @@
           <% else %>
             <% pclass = "unread"%>
           <% end %>
-          <li><%= delete_some("/notifications/#{n.id}") %><p class="<%= pclass %>">你的文章<a href="/notifications/<%= n.id %>"><%= @comments.find(n.comment_id).post.title%></a>,被 <%= @comments.find(n.comment_id).user.name %>回复了</p><div class="empty"></div> 
+          <li><%= delete_some("/notifications/#{n.id}") %><p class="<%= pclass %>">你的文章<a href="/notifications/<%= n.id %>"><%= h(@comments.find(n.comment_id).post.title)%></a>,被 <%= h(@comments.find(n.comment_id).user.name) %>回复了</p><div class="empty"></div> 
             </li>
         <% end %>
         </ul>
@@ -63,7 +63,7 @@
     <p>主题列表:</p>
     <% @posts.each do |p|%>
       <li>
-      <a href="/topics/<%= p.id %>"><%= p.title %></a>
+      <a href="/topics/<%= p.id %>"><%= h(p.title) %></a>
       <span>.<%= p.comments.count%>条回复</span>
       </li>
     <% end %>
@@ -77,7 +77,7 @@
         <div class="entry"><%= c.body %></div>
         <span>@</span>
         <span>.</span>
-        <a href="/topics/<%= c.post.id%>"><%= c.post.title %></a>
+        <a href="/topics/<%= c.post.id%>"><%= h(c.post.title) %></a>
       </li>
     <% end %>
     <%= will_paginate @comments, next_label: "下一页" , previous_label: "上一页"%>

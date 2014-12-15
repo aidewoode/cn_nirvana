@@ -26,13 +26,19 @@ GEM
     carrierwave-qiniu (0.1.5)
       carrierwave
       qiniu (~> 6.2.4)
+    crass (0.2.1)
     daemons (1.1.9)
     eventmachine (1.0.3)
     i18n (0.6.11)
     json (1.8.1)
     mime-types (1.25.1)
+    mini_portile (0.6.1)
     minitest (5.4.0)
     netrc (0.8.0)
+    nokogiri (1.6.5)
+      mini_portile (~> 0.6.0)
+    nokogumbo (1.1.12)
+      nokogiri
     pg (0.17.1)
     qiniu (6.2.4)
       json (~> 1.7)
@@ -58,6 +64,10 @@ GEM
       rack-test (~> 0.6.2)
       ripl (>= 0.7.0)
     ruby-hmac (0.4.0)
+    sanitize (3.0.4)
+      crass (~> 0.2.0)
+      nokogiri (>= 1.4.4)
+      nokogumbo (= 1.1.12)
     shotgun (0.9)
       rack (>= 1.0)
     sinatra (1.4.5)
@@ -94,6 +104,7 @@ DEPENDENCIES
   i18n
   pg
   rack-flash3
+  sanitize
   shotgun
   sinatra
   sinatra-activerecord

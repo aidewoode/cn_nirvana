@@ -6,8 +6,11 @@
     <option value="资源">资源</option>
     <option value="足球">足球</option>
     <option value="反馈">反馈</option>
+    <% if admin? %>
+      <option value="置顶">置顶</option>
+    <% end %>
   </select>
-  <input id="post_title" name="post[title]" type="text" placeholder="在这里输入标题" value="<%= post.title %>" />
+  <input id="post_title" name="post[title]" type="text" placeholder="在这里输入标题" value="<%= h(post.title) %>" />
 </div>
 
 <textarea id="post_body" name="post[body]" row="5"><%= post.body %></textarea>

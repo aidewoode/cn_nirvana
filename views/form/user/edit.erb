@@ -11,7 +11,7 @@
       <% else %>
         <% name_value = "#{@user.name}"%>
       <% end %>
-      <input id="user_fake" name="user[fake]" type="text" value="<%= name_value %>" />
+      <input id="user_fake" name="user[fake]" type="text" value="<%= h(name_value) %>" />
     </div>
     <div>
       <label for="user_avatar">头像:</label>
@@ -25,12 +25,12 @@
 
     <div>
       <label for="user_city">城市:</label>
-      <input type="text" name="user[city]" id="user_city" value="<%= @user.city%>" />
+      <input type="text" name="user[city]" id="user_city" value="<%= h(@user.city)%>" />
     </div>
 
     <div>
       <label for="user_info">个人介绍:</label>
-      <textarea name="user[info]" id="user_info" rows="8" cols="40"><%= @user.info %></textarea>
+      <textarea name="user[info]" id="user_info" rows="8" cols="40"><%= h(@user.info) %></textarea>
     </div>
     <input type="submit" value="修改资料" />
 

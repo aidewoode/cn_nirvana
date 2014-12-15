@@ -40,7 +40,7 @@
         </div>
         <% end %>
         <div class="account">
-          <a href="/account/<%= user_name %>"><%=user_name %></a>
+          <a href="/account/<%= user_name %>"><%= h(user_name) %></a>
         </div>
       <% else %>
         <div class="signup"><a href="/signup" >注册</a></div>

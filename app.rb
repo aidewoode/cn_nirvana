@@ -9,6 +9,7 @@ require "carrierwave-qiniu"
 require "rack-flash"
 require "i18n"
 require "i18n/backend/fallbacks"
+require "sanitize"
 require "./environments"
 
 enable :sessions
@@ -18,7 +19,6 @@ set :session_secret, "super secret"
 use Rack::Flash
 
 helpers do
-
 
   def pretty_time(time)
     time.strftime("%Y/%m/%d")
@@ -65,6 +65,18 @@ helpers do
 
   def t(text)
     I18n.t(text)
+  end
+
+  def h(text)
+    Rack::Utils.escape_html(text)
+  end
+
+  def sanitize_restricted(html)
+    Sanitize.fragment(html,Sanitize::Config::RESTRICTED)
+  end
+
+  def sanitize_relaxed(html)
+    Sanitize.fragment(html,Sanitize::Config::RELAXED)
   end
 
   def time_ago(start_time)
@@ -159,7 +171,7 @@ end
 
 
 ## post routes
-
+#
 
 get "/" do
   @top_posts = Post.where(top: true).order("last_reply_time DESC")
@@ -177,8 +189,14 @@ post "/topics" do
   is_login
   user = User.find(session[:user_id])
   @post = user.posts.build(params[:post])
+  @post.title = sanitize_restricted(@post.title)
+  @post.tag = sanitize_restricted(@post.tag)
+  @post.body = sanitize_relaxed(@post.body)
   if @post.save
     @post.last_reply_time = @post.created_at
+    if @post.tag == "置顶"
+      @post.top = true
+    end
     @post.save    
     flash[:success] = t(:post_success) 
     redirect "/topics/#{@post.id}"
@@ -208,6 +226,10 @@ patch "/topics/:id" do
   is_login
   @post = User.find(session[:user_id]).posts.find(params[:id])
   if @post.update_attributes(params[:post].delete_if {|key, value| key == "user_id"})
+    @post.title = sanitize_restricted(@post.title)
+    @post.tag = sanitize_restricted(@post.tag)
+    @post.body = sanitize_relaxed(@post.body)
+    @post.save
     flash[:success] = t(:post_modify_success) 
     redirect "/topics/#{@post.id}"
   else
@@ -244,6 +266,7 @@ end
 
 post "/signup" do
   @user = User.new(params[:user].delete_if { |key,value| key == "admin" })
+  @user.name = sanitize_restricted(@user.name)
   if @user.save
     session[:user_id] = @user.id
     flash[:success] = t(:user_success)
@@ -305,6 +328,10 @@ patch "/users" do
   is_login
   @user = User.find(session[:user_id])
   if @user.update_attributes(params[:user].delete_if{ |key,value| key == "email"or key == "name" or key == "admin"}) 
+    @user.fake = sanitize_restricted(@user.fake)
+    @user.city = sanitize_restricted(@user.city)
+    @user.info = sanitize_restricted(@user.info)
+    @user.save
     redirect "/account/#{@user.name}"
   else
     erb :"form/user/edit" 
@@ -328,6 +355,7 @@ post "/comments/:id" do # need to change
   is_login
   comment = User.find(session[:user_id]).comments.build(params[:comment])
   comment.post_id = params[:id]
+  comment.body = sanitize_relaxed(comment.body)
   if comment.save
       post = Post.find(params[:id])
       post.last_reply_time = comment.created_at
