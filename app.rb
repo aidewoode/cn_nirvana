@@ -6,6 +6,7 @@ require "qiniu"
 require "carrierwave"
 require "carrierwave/orm/activerecord"
 require "carrierwave-qiniu"
+#require "mini_magick"
 require "rack-flash"
 require "i18n"
 require "i18n/backend/fallbacks"
@@ -98,9 +99,14 @@ helpers do
 end
 
 class AvatarUploader < CarrierWave::Uploader::Base
+  include CarrierWave::MiniMagick
+
+
   storage :qiniu
   self.qiniu_protocal = "http"
   self.qiniu_can_overwrite = true
+
+  process :resize_to_fit => [100,100]
 
   def store_dir
     "avatar"
@@ -111,7 +117,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "avatar#{model.id}.#{file.extension}" if original_filename.present?
+    "avatar#{model.id}" if original_filename.present?
   end
 
   def default_url

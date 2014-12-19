@@ -13,6 +13,7 @@ gem "carrierwave-qiniu"
 gem "rack-flash3"
 gem "i18n"
 gem "sanitize"
+gem "mini_magick"
 
 group :development do
   gem "sqlite3"

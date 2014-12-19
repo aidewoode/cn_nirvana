@@ -384,6 +384,7 @@ ul.all_topics div.avatar {
 
 ul.all_topics div.avatar img {
   width: 60px;
+  height: 60px;
   display: block;
 
 }
@@ -467,6 +468,7 @@ div.topic_title div.avatar {
 
 div.topic_title div.avatar img {
   width: 60px;
+  height: 60px;
   display: block;
 }
 
@@ -544,6 +546,7 @@ li.comment div.avatar {
 
 li.comment div.avatar img {
   width: 60px;
+  height: 60px;
   display: block;
 }
 li.comment div.comment_info {
@@ -649,6 +652,7 @@ div.user_header div.avatar {
 div.user_header div.avatar img {
   display: block;
   width: 60px;
+  height: 60px;
 }
 
 div.user_header div.username {
