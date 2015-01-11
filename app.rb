@@ -21,7 +21,7 @@ use Rack::Flash
 
 helpers do
 
-  def pretty_time(time)
+  def pretty_time(time) 
     time.strftime("%Y/%m/%d")
   end
 
@@ -95,7 +95,6 @@ helpers do
        start_time.strftime( "%Y/%m/%d")
     end
   end
-
 end
 
 class AvatarUploader < CarrierWave::Uploader::Base
@@ -171,8 +170,6 @@ class Notification < ActiveRecord::Base
   belongs_to :user
   belongs_to :comment
 end
-
-
 
 
 
@@ -367,7 +364,7 @@ post "/comments/:id" do # need to change
       post.last_reply_time = comment.created_at
       post.save
     if ( comment.user != Post.find(params[:id]).user )
-      Notification.create(user_id: Post.find(params[:id]).user.id, comment_id: comment.id )
+      Notification.create(user_id: Post.find(params[:id]).user.id , comment_id: comment.id , name: comment.user.name , post_id: Post.find(params[:id]).id )
     end
     flash[:success] = t(:comment_success)
     redirect "/topics/#{params[:id]}"

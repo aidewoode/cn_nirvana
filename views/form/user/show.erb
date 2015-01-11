@@ -53,7 +53,7 @@
           <% else %>
             <% pclass = "unread"%>
           <% end %>
-          <li><%= delete_some("/notifications/#{n.id}") %><p class="<%= pclass %>">你的文章<a href="/notifications/<%= n.id %>"><%= h(@comments.find(n.comment_id).post.title)%></a>,被 <%= h(@comments.find(n.comment_id).user.name) %>回复了</p><div class="empty"></div> 
+          <li><%= delete_some("/notifications/#{n.id}") %><p class="<%= pclass %>">你的文章<a href="/notifications/<%= n.id %>"><%= h(@user.posts.find(n.post_id).title)%></a>,被 <%= h(n.name) %>回复了</p><div class="empty"></div> 
             </li>
         <% end %>
         </ul>

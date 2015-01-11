@@ -1,12 +1,12 @@
+<% if flash[:error] %>
+  <div class="flash flash_error">
+    <%= flash[:error]%>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </div>
+<% end %>
 <div class="sign_up">
-  <% if flash[:error] %>
-    <div class="flash flash_error">
-      <%= flash[:error]%>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </div>
-  <% end %>
   <h1>欢迎注册成为CnNirvana 的会员</h1>
   <form action="/signup" method="post">
     <div>
