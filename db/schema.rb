@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150111073831) do
+ActiveRecord::Schema.define(version: 20150113091405) do
 
   create_table "comments", force: true do |t|
     t.text     "body"
@@ -30,10 +30,12 @@ ActiveRecord::Schema.define(version: 20150111073831) do
     t.boolean  "read",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.integer  "post_id"
+    t.string   "user_name"
+    t.boolean  "atwho",      default: false
+    t.string   "post_name"
   end
 
+  add_index "notifications", ["comment_id"], name: "index_notifications_on_comment_id"
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
 
   create_table "posts", force: true do |t|

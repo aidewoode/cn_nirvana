@@ -1,5 +1,5 @@
 (function dropList() {
-  var click = document.querySelector(".drop_down")
+  var click = document.querySelector(".drop_down");
   var list = document.querySelector(".drop_menu");
   click.onclick = function(event) {
     list.classList.add("drop_active");
@@ -12,10 +12,15 @@
   
 })();
 
-
-function replyOne(username) {
-  var content = "<p><b class='atwho'>@"+username+"</b></p></br>" ;
-  var input = document.querySelector(".simditor-body");
-  input.innerHTML = content;
-}
-
+(function changeCommentRoute() {
+  var post = document.querySelector(".comment_submit");
+  post.onclick = function() {
+    var atwho = document.querySelector("a.simditor-mention");
+    if(atwho.dataset.mention) {
+      var attr = atwho.getAttribute("href");
+      var postForm = document.querySelector("form.comment");
+      postForm.setAttribute("action",postForm.getAttribute("action") + attr.slice(8));
+    } 
+    
+  };
+})();

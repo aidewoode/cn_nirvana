@@ -1,5 +1,6 @@
 require "sinatra"
 require "sinatra/activerecord"
+require "json"
 require "will_paginate"
 require "will_paginate/active_record"
 require "qiniu"
@@ -213,6 +214,15 @@ end
 get "/topics/:id" do
   if (@post = Post.find_by_id(params[:id]))
     @comments = @post.comments.paginate(page: params[:page], per_page: 10)
+    atwho = []
+    atlist=  []
+    @comments.each do |comment|
+      atwho.push(comment.user.name)
+    end
+    atwho.uniq.each do |name|
+      atlist.push({name: name, url: "/account/#{name}"})
+    end
+    @items = atlist.to_json
     erb :"form/topic/show"
   else
     erb :"pages/404"
@@ -364,7 +374,7 @@ post "/comments/:id" do # need to change
       post.last_reply_time = comment.created_at
       post.save
     if ( comment.user != Post.find(params[:id]).user )
-      Notification.create(user_id: Post.find(params[:id]).user.id , comment_id: comment.id , name: comment.user.name , post_id: Post.find(params[:id]).id )
+      Notification.create(user_id: Post.find(params[:id]).user.id , comment_id: comment.id , user_name: comment.user.name , post_name: Post.find(params[:id]).title )
     end
     flash[:success] = t(:comment_success)
     redirect "/topics/#{params[:id]}"
@@ -373,6 +383,27 @@ post "/comments/:id" do # need to change
     redirect "/topics/#{params[:id]}"
   end
 end
+
+post "/comments/:id/:name" do
+  is_login
+  comment = User.find(session[:user_id]).comments.build(params[:comment])
+  comment.post_id = params[:id]
+  comment.body = sanitize_relaxed(comment.body)
+  if comment.save
+    post = Post.find(params[:id])
+    post.last_reply_time = comment.created_at
+    post.save
+
+    Notification.create(user_id: User.find_by_name(params[:name]).id, comment_id: comment.id , user_name: comment.user.name, post_name: Post.find(params[:id]).title, atwho: true)
+
+    flash[:success] = t(:comment_success)
+    redirect "/topics/#{params[:id]}"
+  else
+    flash[:error] = t(:comment_error)
+    redirect "/topics/#{params[:id]}"
+  end
+end
+
 
 delete "/comments/:id" do
   is_login
