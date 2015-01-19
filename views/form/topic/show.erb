@@ -18,7 +18,7 @@
       <a href="/tags/<%= @post.tag %>"><%= h(@post.tag) %></a>
       <span>.</span>
       <span>由</span>
-      <a href="/account/<%= @post.user.name%>"><%= h(@post.user.name) %></a>
+      <a class="account" href="/account/<%= @post.user.name%>"><%= h(@post.user.name) %></a>
       <span>发表</span>
       <span>.</span>
       <span><%= time_ago(@post.created_at) %></span>

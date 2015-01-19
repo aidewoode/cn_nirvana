@@ -194,6 +194,16 @@ nav.global_nav div a {
   color: #555;
 }
 
+div.global_nav div a.drop_down {
+  display: inline-block;
+  height: 20px;
+  width: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
 nav.global_nav div.signup { 
   float: right;
 }
@@ -437,6 +447,12 @@ ul.all_topics div.content {
   margin-right: 70px;
 }
 
+ul.all_topics div.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 ul.all_topics div.title a {
   color: #066;
   font-size: 1.1em;
@@ -450,6 +466,9 @@ ul.all_topics div.title a:hover {
 ul.all_topics div.info {
   color: #aaa;
   font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 ul.all_topics div.info a {
@@ -520,6 +539,9 @@ div.topic_title div.topic_info {
   margin-left: 15px;
   color: #aaa;
   font-size: 0.9em;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
 }
 
 div.topic_title div.topic_info a {
@@ -529,6 +551,7 @@ div.topic_title div.topic_info a {
   font-weight: 600;
   
 }
+
 
 div.topic_body {
   margin-top: 30px;
@@ -1192,6 +1215,7 @@ div.flash_notice {
 
   footer.index p {
     letter-spacing: normal;
+    font-size: 0.8em;
   }
 
   div.sign_up h1 {
@@ -1199,8 +1223,104 @@ div.flash_notice {
     font-size: 1.6em;
   }
 
+  nav.global_nav div a.drop_down {
+    letter-spacing: normal;
+  }
+
+  nav.global_nav div.notification {
+    display: none;
+
+  }
 }
 
+@media screen and (max-width: 380px) {
+  nav.global_nav {
+    margin: 4px 20px;
+  }
+
+  nav.global_nav h1 {
+    font-size: 1.3em;
+  }
+
+  nav.global_nav ul {
+    margin: 0px 6px;
+  }
+
+  nav.global_nav div.login {
+    margin-right: 5px;
+    padding-right: 5px;
+  }
+
+  nav.global_nav ul li {
+    margin-left: 5px;
+  }
+
+  nav.global_nav ul a {
+    font-size: 0.8em;
+  }
+
+  ul.all_topics div.info {
+    height: 25px;
+    font-size: 0.8em;
+  }
+
+  ul.all_topics div.title {
+    height: 25px;
+  }
+
+  ul.all_topics div.avatar img {
+    height: 50px;
+    width: 50px;
+  }
+
+  ul.all_topics div.title a {
+    font-size: 0.9em;
+  }
+
+  div.topic_title h1 {
+    font-size: 1.2em;
+    height: 25px;
+  }
+
+  div.topic_title div.topic_info {
+    font-size: 0.8em;
+    height: 25px;
+  }
+
+  div.topic_title div.avatar img {
+    width: 50px;
+    height: 50px;
+  }
+
+  section.index {
+    margin-top: 80px;
+  }
+
+  li.comment div.comment_info {
+    font-size: 0.8em;
+    height: 25px;
+  }
+  li.comment div.avatar img {
+    width: 50px;
+    height: 50px;
+  }
+
+  div.login_alert {
+    font-size: 0.8em;
+  }
+
+  div.sign_up h1 {
+    font-size: 1.3em;
+  }
+
+  div.sign_up form {
+
+   font-size: 0.9em;
+  }
+
+}
+
+}
 @keyframes fadeIn {
   0% {opacity: 0;}
   25% {opacity: 0.25;}
@@ -1232,5 +1352,4 @@ div.flash_notice {
   75% {opacity: 0.75;}
   100% {opacity: 0.99;}
 }
-
 

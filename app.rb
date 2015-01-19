@@ -214,13 +214,11 @@ end
 get "/topics/:id" do
   if (@post = Post.find_by_id(params[:id]))
     @comments = @post.comments.paginate(page: params[:page], per_page: 10)
-    atwho = []
-    atlist=  []
-    @comments.each do |comment|
-      atwho.push(comment.user.name)
+    atwho =  @comments.map do |comment|
+      comment.user.name
     end
-    atwho.uniq.each do |name|
-      atlist.push({name: name, url: "/account/#{name}"})
+    atlist = atwho.uniq.map do |name|
+      {name: name, url: "/account/#{name}"}
     end
     @items = atlist.to_json
     erb :"form/topic/show"
