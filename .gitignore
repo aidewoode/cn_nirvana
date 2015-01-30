@@ -5,6 +5,7 @@
 /log/*.log
 /tmp
 /tags
+/public/uploads/tmp
 
 doc/
 *.swp
