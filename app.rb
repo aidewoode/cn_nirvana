@@ -261,6 +261,19 @@ delete "/topics/:id" do
   end
 end
 
+get "/topics/:id/essence" do
+  is_login
+  if User.find(session[:user_id]).admin?
+    post = Post.find(params[:id])
+    post.essence = true
+    post.save
+    redirect "/topics/#{params[:id]}"
+  else
+    flash[:notice] = t(:permission_notice)
+    redirect "/"
+  end
+end
+
 get "/tags/:tag" do
   @posts = Post.where("tag = ?", params[:tag]).order(last_reply_time: :desc)
   @comments = Comment.all

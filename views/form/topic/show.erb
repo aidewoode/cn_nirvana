@@ -36,6 +36,7 @@
     <% end %>
     <% if login?&&admin? %>
       <%= delete_some("/topics/#{@post.id}")%>
+      <a href="/topics/<%= @post.id %>/essence">设为精华</a>
     <% end %>
     <div class="empty">
     </div>
