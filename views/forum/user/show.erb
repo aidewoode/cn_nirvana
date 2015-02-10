@@ -12,7 +12,7 @@
     </div>
     <div class="usernumber">
       <div class="number">第<%=@user.id%>位会员</div>
-      <div class="since">于<%= pretty_time(@user.created_at)%>加入</div>
+      <div class="since data_time" data-time='<%= @user.created_at %>'></div>
     </div>
     <div class="empty">
       

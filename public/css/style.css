@@ -667,6 +667,11 @@ div.all_content form.comment div.submit input:hover {
   opacity: 0.7;
 }
 
+div.all_content form.comment div.submit input.disable {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
 div.login_alert {
   text-align: center;
   margin-top: 65px;
@@ -834,7 +839,9 @@ div.user_theme li span {
 div.user_edit {
   max-width: 700px;
   margin: auto;
-  padding-top: 50px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
 }
 
 div.user_edit > div {
@@ -935,6 +942,10 @@ div.sign_up form {
   background: #fff;
 }
 
+div.sign_up form.disable {
+  cursor: not-allowed;
+}
+
 div.sign_up div {
   margin-bottom: 20px;
   font-size: 0.9em;
@@ -963,6 +974,11 @@ div.sign_up input[type="submit"] {
   width: 100px;
   outline: none;
   border: none;
+}
+
+div.sign_up input[type="submit"].disable {
+  background: #ddd;
+  cursor: not-allowed;
 }
 
 div.sign_up input[type="submit"]:hover {
@@ -1032,13 +1048,21 @@ div.new_edit_post input[type="submit"]:hover {
   opacity: 0.7;
 }
 
+div.new_edit_post input[type="submit"].disable {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+
 /************************************/
 /* about page style */
 
 div.about_page {
   max-width: 700px;
   margin: auto;
-  padding-top: 50px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
 }
 
 div.about_page h1 {
@@ -1101,14 +1125,14 @@ div.flash {
 }
 
 div.flash_error {
-  background-color: #f20;
+  background-color: #f40;
 }
 
 div.flash_success {
   background-color: #0c6; 
 }
 
-div.flash_notice {
+div.flash_notice  {
   background-color: #f60;
 }
 

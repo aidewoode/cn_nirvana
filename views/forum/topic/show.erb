@@ -21,7 +21,7 @@
       <a class="account" href="/account/<%= @post.user.name%>"><%= h(@post.user.name) %></a>
       <span>发表</span>
       <span>.</span>
-      <span><%= time_ago(@post.created_at) %></span>
+      <span class="data_time_ago" data-time='<%= @post.created_at %>'></span>
     </div>
     <div class="empty">
       
@@ -54,7 +54,7 @@
       <div class="comment_info">
         <a href="/account/<%= comment.user.name %>"><%= h(comment.user.name) %></a>
         <span>.</span>
-        <span><%= time_ago(comment.created_at)%></span>
+        <span class="data_time_ago" data-time='<%= comment.created_at %>'></span>
       </div>
       <div class="comment_content">
         <% if login?&&admin?%>
@@ -68,12 +68,12 @@
 
   <%= will_paginate @comments ,next_label: "下一页" , previous_label: "上一页"%>
   <% if login? %>
-    <form class="comment" action="/comments/<%= @post.id %>" method="post">
+    <form class="comment submit_form" action="/comments/<%= @post.id %>" method="post">
       <label id="comment_tag" for="comment_body">发表你的回复：</label><br/> 
       <textarea id="comment_body" name="comment[body]" row="5"></textarea><br />
 
       <div class="submit">
-        <input class="comment_submit" type="submit" value="发表回复" />
+        <input class="comment_submit submit_form" type="submit" value="发表回复" />
       </div>
 
     </form>

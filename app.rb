@@ -7,7 +7,6 @@ require "qiniu"
 require "carrierwave"
 require "carrierwave/orm/activerecord"
 require "carrierwave-qiniu"
-#require "mini_magick"
 require "rack-flash"
 require "i18n"
 require "i18n/backend/fallbacks"
@@ -22,24 +21,20 @@ use Rack::Flash
 
 helpers do
 
-  def pretty_time(time) 
-    time.strftime("%Y/%m/%d")
-  end
-
   def post_list(post)
-    erb :"form/_post_list", locals: { post: post}
+    erb :"forum/_post_list", locals: { post: post}
   end
 
   def new_edit_js
-    erb :"form/topic/_new_edit_js"
+    erb :"forum/topic/_new_edit_js"
   end
 
   def delete_some(route)
-    erb :"form/_delete_some", locals: { route: route }
+    erb :"forum/_delete_some", locals: { route: route }
   end
 
   def new_edit_form(post)
-    erb :"form/topic/_form", locals: { post: post }
+    erb :"forum/topic/_form", locals: { post: post }
   end
 
   def login? 
@@ -81,21 +76,6 @@ helpers do
     Sanitize.fragment(html,Sanitize::Config::RELAXED)
   end
 
-  def time_ago(start_time)
-    diff = Time.now - start_time
-    case diff
-    when 0..59
-       "刚刚不久"
-    when 60..(3600-1)
-       "#{(diff/60).to_i} 分钟前"
-    when 3600..(3600*24-1)
-       "#{(diff/3600).to_i} 小时前"
-    when (3600*24)..(3600*24*30)
-       "#{((diff/(3600*24)).to_i)} 天前"
-    else
-       start_time.strftime( "%Y/%m/%d")
-    end
-  end
 end
 
 class AvatarUploader < CarrierWave::Uploader::Base
@@ -180,13 +160,13 @@ end
 get "/" do
   @top_posts = Post.where(top: true).order("last_reply_time DESC")
   @posts = Post.where(top: false).paginate(page: params[:page], per_page: 10).order("last_reply_time DESC")
-  erb :"form/index"
+  erb :"forum/index"
 end
 
 get "/topics/new" do
   is_login
   @post = Post.new
-  erb :"form/topic/new"
+  erb :"forum/topic/new"
 end
 
 post "/topics" do
@@ -206,7 +186,7 @@ post "/topics" do
     redirect "/topics/#{@post.id}"
   else
     flash.now[:error] = t(:post_error)
-    erb :"form/topic/new"
+    erb :"forum/topic/new"
   end
 end
 
@@ -221,7 +201,7 @@ get "/topics/:id" do
       {name: name, url: "/account/#{name}"}
     end
     @items = atlist.to_json
-    erb :"form/topic/show"
+    erb :"forum/topic/show"
   else
     erb :"pages/404"
   end
@@ -230,7 +210,7 @@ end
 get "/topics/:id/edit" do
   is_login
   @post = User.find(session[:user_id]).posts.find(params[:id])
-  erb :"form/topic/edit"
+  erb :"forum/topic/edit"
 end
 
 patch "/topics/:id" do
@@ -245,7 +225,7 @@ patch "/topics/:id" do
     redirect "/topics/#{@post.id}"
   else
     flash[:error] = t(:post_modify_error)
-    erb :"form/topic/edit"
+    erb :"forum/topic/edit"
   end
 end
 
@@ -277,7 +257,7 @@ end
 get "/tags/:tag" do
   @posts = Post.where("tag = ?", params[:tag]).order(last_reply_time: :desc)
   @comments = Comment.all
-  erb :"form/tags"
+  erb :"forum/tags"
 end
 
 # user routes
@@ -285,7 +265,7 @@ end
 
 get "/signup" do
   @user = User.new
-  erb :"form/user/new"
+  erb :"forum/user/new"
 end
 
 post "/signup" do
@@ -297,14 +277,14 @@ post "/signup" do
     redirect '/'
   else
     flash.now[:error] = t(:user_error)
-    erb :"form/user/new"
+    erb :"forum/user/new"
   end
 
 end
 
 get "/login" do
   @user = User.new
-  erb :"form/user/login"
+  erb :"forum/user/login"
 end 
 
 get "/logout" do
@@ -322,7 +302,7 @@ post "/login" do
     redirect "/"
   else
     flash.now[:notice] = t(:user_login_error)
-    erb :"form/user/login"
+    erb :"forum/user/login"
   end
 end
 
@@ -331,7 +311,7 @@ get "/account/:name" do
   if (@user = User.find_by_name(params[:name]))
     @posts = @user.posts.paginate(page: params[:page], per_page: 5)
     @comments = @user.comments.paginate(page: params[:page], per_page: 5)
-    erb :"form/user/show"
+    erb :"forum/user/show"
   else
     erb :"pages/404", layout: false 
   end
@@ -341,7 +321,7 @@ get "/account/:name/edit" do
   is_login
   if (User.find(session[:user_id]) == User.find_by_name(params[:name]))
   @user = User.find(session[:user_id])
-  erb :"form/user/edit"
+  erb :"forum/user/edit"
   else
     flash[:notice] = t(:permission_notice)
     redirect "/"
@@ -358,7 +338,7 @@ patch "/users" do
     @user.save
     redirect "/account/#{@user.name}"
   else
-    erb :"form/user/edit" 
+    erb :"forum/user/edit" 
   end
 end
 

@@ -8,10 +8,10 @@
 <% end %>
 <div class="new_edit_post">
   <h1>发布你的新帖</h1>
-  <form action="/topics" method="post">
+  <form class="submit_form" action="/topics" method="post">
     <%= new_edit_form(@post) %>
     <div class="submit">
-      <input type="submit" value="发布" />
+      <input class="submit_form" type="submit" value="发布" />
     </div>
 
   </form>

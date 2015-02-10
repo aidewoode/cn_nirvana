@@ -25,7 +25,7 @@
         <a href="/account/<%= post.user.name %>"><%= h(post.user.name) %></a>
         <span>发表</span>
         <span>.</span>
-        <span class="time"><%= time_ago(post.created_at)%></span>
+        <span class="data_time_ago" data-time='<%= post.created_at %>' ></span>
       <% else %>
         <span>最后由</span>
         <% comment = post.comments.last%>
@@ -33,7 +33,7 @@
         <a href="/account/<%= user_name %>"><%= h(user_name) %></a>
         <span>回复</span>
         <span>.</span>
-        <span class="time"><%= time_ago(comment.created_at)%></span>
+        <span class="data_time_ago" data-time='<%= comment.created_at %>' ></span>
       <% end %>
     </div>
   </div>
