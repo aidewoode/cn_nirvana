@@ -18,7 +18,7 @@
       <a href="/tags/<%= @post.tag %>"><%= h(@post.tag) %></a>
       <span>.</span>
       <span>由</span>
-      <a class="account" href="/account/<%= @post.user.name%>"><%= h(@post.user.name) %></a>
+      <a class="account" href="/account/<%= @post.user.name%>"><%= h(real_name(@post.user)) %></a>
       <span>发表</span>
       <span>.</span>
       <span class="data_time_ago" data-time='<%= @post.created_at %>'></span>
@@ -52,7 +52,7 @@
         <img src="<%= comment.user.avatar_url %>" alt="avatar" />
       </div>
       <div class="comment_info">
-        <a href="/account/<%= comment.user.name %>"><%= h(comment.user.name) %></a>
+        <a href="/account/<%= comment.user.name %>"><%= h(real_name(comment.user)) %></a>
         <span>.</span>
         <span class="data_time_ago" data-time='<%= comment.created_at %>'></span>
       </div>

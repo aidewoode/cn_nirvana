@@ -23,7 +23,6 @@
         <li><a href="/about" id="about" >关于</a></li>
       </ul>
       <% if login? %>
-        <% user_name = current_user.name %>
         <% count = current_user.notifications.count %>
         <% if count != 0 %>
           <% if (count > 9)%>
@@ -32,13 +31,13 @@
             <% noti_id = "one_number"%>
           <% end %>
         <div class="notification">
-          <a href="/account/<%= user_name %>" id="<%= noti_id %>"><%= count %></a>
+          <a href="/account/<%= current_user.name %>" id="<%= noti_id %>"><%= count %></a>
         </div>
         <% end %>
         <div class="account">
-          <a href="#" class="drop_down"><%= h(user_name) %></a>
+          <a href="#" class="drop_down"><%= h(real_name(current_user)) %></a>
           <ul class="drop_menu">
-            <li><a href="/account/<%= user_name%>">个人主页</a></li>
+            <li><a href="/account/<%= current_user.name %>">个人主页</a></li>
             <li><a href="/topics/new">发布新帖</a></li>
             <li><a href="/logout">登出</a></li>
           </ul>

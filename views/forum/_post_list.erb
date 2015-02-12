@@ -22,15 +22,15 @@
       <span> . </span>
       <% if (count == 0) %>
         <span>由</span>
-        <a href="/account/<%= post.user.name %>"><%= h(post.user.name) %></a>
+        <a href="/account/<%= post.user.name %>"><%= h(real_name(post.user)) %></a>
         <span>发表</span>
         <span>.</span>
         <span class="data_time_ago" data-time='<%= post.created_at %>' ></span>
       <% else %>
         <span>最后由</span>
         <% comment = post.comments.last%>
-        <% user_name = comment.user.name %>
-        <a href="/account/<%= user_name %>"><%= h(user_name) %></a>
+        <% comment_user = comment.user %>
+        <a href="/account/<%= comment_user.name %>"><%= h(real_name(comment_user)) %></a>
         <span>回复</span>
         <span>.</span>
         <span class="data_time_ago" data-time='<%= comment.created_at %>' ></span>

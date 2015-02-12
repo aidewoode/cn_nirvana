@@ -60,6 +60,14 @@ helpers do
     @user = User.find(session[:user_id])
   end
 
+  def real_name(user)
+    if user.fake 
+      user.fake
+    else
+      user.name
+    end
+  end
+
   def t(text)
     I18n.t(text)
   end
@@ -196,10 +204,10 @@ get "/topics/:id" do
   if (@post = Post.find_by_id(params[:id]))
     @comments = @post.comments.paginate(page: params[:page], per_page: 10)
     atwho =  @comments.map do |comment|
-      comment.user.name
+      comment.user
     end
-    atlist = atwho.uniq.map do |name|
-      {name: name, url: "/account/#{name}"}
+    atlist = atwho.uniq.map do |user|
+      {name: real_name(user), url: "/account/#{user.name}"}
     end
     @items = atlist.to_json
     erb :"forum/topic/show"
@@ -366,7 +374,7 @@ post "/comments/:id" do # need to change
       post.last_reply_time = comment.created_at
       post.save
     if ( comment.user != Post.find(params[:id]).user )
-      Notification.create(user_id: Post.find(params[:id]).user.id , comment_id: comment.id , user_name: comment.user.name , post_name: Post.find(params[:id]).title )
+      Notification.create(user_id: Post.find(params[:id]).user.id , comment_id: comment.id , user_name: real_name(comment.user) , post_name: Post.find(params[:id]).title )
     end
     flash[:success] = t(:comment_success)
     redirect "/topics/#{params[:id]}"
@@ -386,7 +394,7 @@ post "/comments/:id/:name" do
     post.last_reply_time = comment.created_at
     post.save
 
-    Notification.create(user_id: User.find_by_name(params[:name]).id, comment_id: comment.id , user_name: comment.user.name, post_name: Post.find(params[:id]).title, atwho: true)
+    Notification.create(user_id: User.find_by_name(params[:name]).id, comment_id: comment.id , user_name: real_name(comment.user), post_name: Post.find(params[:id]).title, atwho: true)
 
     flash[:success] = t(:comment_success)
     redirect "/topics/#{params[:id]}"

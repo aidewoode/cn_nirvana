@@ -4,11 +4,7 @@
       <img src="<%= @user.avatar_url %>" />
     </div>
     <div class="username">
-      <% if @user.fake.nil? %>
-        <%= h(@user.name)%>
-      <% else %>
-        <%= h(@user.fake) %>
-      <% end %>
+      <%= h(real_name(@user))%>
     </div>
     <div class="usernumber">
       <div class="number">第<%=@user.id%>位会员</div>
