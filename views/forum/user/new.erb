@@ -1,22 +1,19 @@
 <% if flash[:error] %>
   <div class="flash flash_error">
     <%= flash[:error]%>
-    <% @user.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
   </div>
 <% end %>
 <div class="sign_up">
   <h1>欢迎注册成为CnNirvana 的会员</h1>
-  <form class="submit_form" action="/signup" method="post">
+  <form class="signup_form submit_form" action="/signup" method="post">
     <div>
-      <label for="user_name">用户名:</label> 
-      <input id="user_name" name="user[name]" type="text" />
+      <label for="user_name">ID:</label> 
+      <input id="user_name" name="user[name]" type="text" placeholder="只能为数字和字母的组合"/>
     </div>
 
     <div>
       <label for="user_email">Email:</label>
-      <input id="user_email" name="user[email]" type="text" />
+      <input id="user_email" name="user[email]" type="text" placeholder="注册后不能更改"/>
     </div>
 
     <div>

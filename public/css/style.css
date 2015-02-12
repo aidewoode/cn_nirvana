@@ -967,6 +967,10 @@ div.sign_up input {
   width: 180px;
 }
 
+div.sign_up input.error {
+  border-color: #f40;
+}
+
 div.sign_up input[type="submit"] {
   background-color: #0c6;
   color: white;
