@@ -187,8 +187,10 @@ post "/topics" do
   @post.body = sanitize_relaxed(@post.body)
   if @post.save
     @post.last_reply_time = @post.created_at
-    if @post.tag == "置顶"
+    if @post.tag == "置顶" && user.admin?
       @post.top = true
+    else
+      @post.tag = "闲聊"
     end
     @post.save    
     flash[:success] = t(:post_success) 
@@ -241,7 +243,7 @@ end
 
 delete "/topics/:id" do
   is_login
-  if User.find(session[:user_id]).admin?
+  if admin?
     @post = Post.find(params[:id]).destroy
     redirect "/"
   else
@@ -252,7 +254,7 @@ end
 
 get "/topics/:id/essence" do
   is_login
-  if User.find(session[:user_id]).admin?
+  if admin?
     post = Post.find(params[:id])
     post.essence = true
     post.save
@@ -353,7 +355,7 @@ end
 
 delete "/users/:id" do
   is_login
-  if User.find(session[:user_id]).admin?
+  if admin?
     User.find(params[:id]).destroy
     redirect "/"
   else
@@ -407,7 +409,7 @@ end
 
 delete "/comments/:id" do
   is_login
-  if User.find(session[:user_id]).admin?
+  if admin?
     post = Comment.find(params[:id]).post
     Comment.find(params[:id]).destroy
     redirect "/topics/#{post.id}"

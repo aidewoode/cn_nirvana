@@ -131,10 +131,10 @@ function mycheckInput(form) {
   if (form) {
     if (form.classList[0] === "signup_form") {
       var changeSubmitButton = function(event) {
-        input.setAttribute("disabled", "disabled");
+        input.disabled = true;
         input.classList.add("disable");
         if (!mycheckInput(form)) {
-          input.removeAttribute("disabled");
+          input.disabled = false;
           input.classList.remove("disable");
           event.preventDefault();
           form.removeEventListener("submit", changeSubmitButton,false);
@@ -145,7 +145,7 @@ function mycheckInput(form) {
 
     } else {
       form.onsubmit = function() {
-        input.setAttribute("disabled", "disabled");
+        input.disabled = true;
         input.classList.add("disable");
       };
     }
