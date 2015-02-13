@@ -1066,11 +1066,11 @@ div.about_page {
   padding: 20px;
   background: #fff;
   border-radius: 10px;
+  color: #444;
 }
 
 div.about_page h1 {
   text-align: center;
-  color: #333;
 }
 
 /* 404 page style */

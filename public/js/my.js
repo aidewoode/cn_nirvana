@@ -39,7 +39,11 @@ function mycheckInput(form) {
           element.classList.add("error");
           element.setAttribute("placeholder", "ID 不能为空");
           reallyTrue.push(false);
-        }else {
+        } else if (input.length > 25){
+          element.classList.add("error");
+          element.setAttribute("placeholder", "长度不能大于25个字符");
+          reallyTrue.push(false);
+        } else {
           var legalId = /^\w+$/;
           if (legalId.test(input)) {
             reallyTrue.push(true);
