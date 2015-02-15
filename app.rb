@@ -266,8 +266,7 @@ get "/topics/:id/essence" do
 end
 
 get "/tags/:tag" do
-  @posts = Post.where("tag = ?", params[:tag]).order(last_reply_time: :desc)
-  @comments = Comment.all
+  @posts = Post.where("tag = ?", params[:tag]).order("last_reply_time DESC")
   erb :"forum/tags"
 end
 

@@ -10,7 +10,7 @@ body {
   position: relative;
   font-size: 16px;
   line-height: 30px;
-  font-family: "Lucida Grande", Consolas, monaco, monospace,"Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, STHeiti, "WenQuanYi Micro Hei", sans-serif;
+  font-family: "Lucida Grande", Consolas, monaco,"Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei","微软雅黑", STHeiti, "WenQuanYi Micro Hei", sans-serif;
   margin: 0;
   background: #eceef1;
 }
@@ -381,7 +381,7 @@ div.all_content ul {
 }
 div.all_content div.result {
   text-align: center;
-  margin: 40px;
+  margin: 40px 140px;
   background-color: #f60;
   padding: 1px;
 
@@ -882,6 +882,12 @@ div.user_info_edit input[type="submit"] {
   margin-left: 120px;
   outline: none;
   border: none;
+}
+
+
+div.user_info_edit input[type="submit"].disable {
+  background-color: #ddd;
+  cursor: not-allowed;
 }
 
 div.user_info_edit input[type="submit"]:hover {

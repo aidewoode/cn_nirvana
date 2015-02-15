@@ -1,7 +1,7 @@
 <div class="user_edit">
   <p>个人资料修改:</p>
   <div class="user_info_edit">
-    <form action="/users" method="post" enctype="multipart/form-data"> 
+    <form class="submit_form" action="/users" method="post" enctype="multipart/form-data"> 
     <input type="hidden" name="_method" value="patch" />
 
     <div>
@@ -32,14 +32,14 @@
       <label for="user_info">个人介绍:</label>
       <textarea name="user[info]" id="user_info" rows="8" cols="40"><%= h(@user.info) %></textarea>
     </div>
-    <input type="submit" value="修改资料" />
+    <input class="submit_form" type="submit" value="修改资料" />
 
     </form>
   </div>
 
   <p>密码修改:</p>
   <div class=" user_info_edit user_password_edit">
-    <form action="/users" method="post">
+    <form class="submit_form" action="/users" method="post">
       <input type="hidden" name="_method" value="patch" />
 
       <div>
@@ -52,7 +52,7 @@
         <input type="password" name="user[password_confirmation]" id="user_password_confirmation" />
       </div>
 
-      <input type="submit" value="修改密码" />
+      <input class="submit_form" type="submit" value="修改密码" />
     </form>
   </div>
 </div>

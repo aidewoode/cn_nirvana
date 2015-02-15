@@ -1,3 +1,4 @@
+
 (function dropList() {
   var click = document.querySelector(".drop_down");
   var list = document.querySelector(".drop_menu");
@@ -30,7 +31,7 @@
 
 function mycheckInput(form) {
   var reallyTrue = [];
-  for (i = 0; i < form.elements.length - 1; i++) {
+  for (var i = 0; i < form.elements.length - 1; i++) {
     switch (i) {
       case 0:
         var element = form.elements[0];
@@ -130,30 +131,42 @@ function mycheckInput(form) {
 }
 
 (function formSubmit() {
-  var form = document.querySelector("form.submit_form");
-  var input = document.querySelector("input.submit_form");
-  if (form) {
-    if (form.classList[0] === "signup_form") {
+  var form = document.querySelectorAll("form.submit_form");
+  var input = document.querySelectorAll("input.submit_form");
+  if (form.length === 1) {
+    if (form[0].classList[0] === "signup_form") {
       var changeSubmitButton = function(event) {
-        input.disabled = true;
-        input.classList.add("disable");
-        if (!mycheckInput(form)) {
-          input.disabled = false;
-          input.classList.remove("disable");
+        input[0].disabled = true;
+        input[0].classList.add("disable");
+        if (!mycheckInput(form[0])) {
+          input[0].disabled = false;
+          input[0].classList.remove("disable");
           event.preventDefault();
-          form.removeEventListener("submit", changeSubmitButton,false);
-          form.addEventListener("submit", changeSubmitButton, false);
+          form[0].removeEventListener("submit", changeSubmitButton,false);
+          form[0].addEventListener("submit", changeSubmitButton, false);
         }
       };
-      form.addEventListener("submit", changeSubmitButton, false);
+      form[0].addEventListener("submit", changeSubmitButton, false);
 
     } else {
-      form.onsubmit = function() {
-        input.disabled = true;
-        input.classList.add("disable");
+      form[0].onsubmit = function() {
+        input[0].disabled = true;
+        input[0].classList.add("disable");
       };
     }
-  }})();
+  } else {
+    for (var i = 0; i < form.length; i++) {
+      (function(k) {
+        form[k].onsubmit = function() {
+          input[k].disabled = true;
+          input[k].classList.add("disable");
+        }; 
+      })(i);
+    }
+    
+  }
+    
+})();
 
 // moment.js function
 //
