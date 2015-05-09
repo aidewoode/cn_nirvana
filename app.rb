@@ -1,5 +1,6 @@
 require "sinatra"
 require "sinatra/activerecord"
+require "sinatra/json"
 require "json"
 require "will_paginate"
 require "will_paginate/active_record"
@@ -15,7 +16,7 @@ require "./environments"
 
 enable :sessions
 
-set :session_secret, "super secret"
+set :session_secret, ENV['SESSION_KEY']
 
 use Rack::Flash
 

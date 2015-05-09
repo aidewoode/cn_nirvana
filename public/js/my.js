@@ -1,4 +1,4 @@
-
+// a function to control drop menu style
 (function dropList() {
   var click = document.querySelector(".drop_down");
   var list = document.querySelector(".drop_menu");
@@ -14,6 +14,7 @@
   
 }})();
 
+// a function to change comment from route
 (function changeCommentRoute() {
   var post = document.querySelector(".comment_submit");
   if (post) {
@@ -28,7 +29,7 @@
     };
 }})();
 
-
+// to check user's input in sign in page
 function mycheckInput(form) {
   var reallyTrue = [];
   for (var i = 0; i < form.elements.length - 1; i++) {
@@ -130,6 +131,7 @@ function mycheckInput(form) {
     }
 }
 
+
 (function formSubmit() {
   var form = document.querySelectorAll("form.submit_form");
   var input = document.querySelectorAll("input.submit_form");
@@ -169,7 +171,7 @@ function mycheckInput(form) {
 })();
 
 // moment.js function
-//
+
 (function prettyTime() {
   var createAt = document.querySelectorAll("div.data_time");
   if (createAt) {
