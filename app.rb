@@ -1,6 +1,5 @@
 require "sinatra"
 require "sinatra/activerecord"
-require "sinatra/json"
 require "json"
 require "will_paginate"
 require "will_paginate/active_record"
